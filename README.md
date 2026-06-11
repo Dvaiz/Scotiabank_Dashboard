@@ -1,94 +1,133 @@
-# FASTCO × Scotiabank — Dashboard Operacional
+# FASTCO x Scotiabank - Dashboard Operacional
 
-Dashboard interactivo de gestión y análisis operacional para la cuenta Scotiabank de FASTCO. Visualiza métricas de productividad, facturación, bitácora cliente, ejecutivos y correlación entre fuentes de datos.
+Dashboard ejecutivo-operacional para seguimiento de productividad, gestion comercial, bitacora cliente, facturacion y correlaciones para la cuenta Scotiabank.
 
-## Estructura del Proyecto
+## 1) Objetivo
+
+El proyecto genera un entregable HTML unico y portable (`dashboard_scotiabank_fastco.html`) a partir de multiples fuentes de datos. El dashboard no requiere servidor para visualizarse y se abre directamente en navegador.
+
+## 2) Arquitectura (SQL-first)
+
+La logica actual prioriza lectura desde SQL Server y mantiene fallback a Excel cuando la conexion SQL no esta disponible.
+
+Flujo resumido:
+1. Extrae datos desde SQL Server (si hay conectividad/driver).
+2. Si una fuente falla, usa archivo local equivalente en `Data/`.
+3. Normaliza y agrega metricas en Python (`Data/generate_dashboard.py`).
+4. Inyecta constantes JS en `Data/template.html`.
+5. Genera `dashboard_scotiabank_fastco.html` en la raiz.
+
+## 3) Estructura del repositorio
 
 ```
-├── dashboard_scotiabank_fastco.html   # Dashboard principal (abrir con doble-click)
-├── LOGO1.png                          # Logo oficial FASTCO
-├── README.md                          # Este archivo
+.
 ├── Data/
-│   ├── generate_dashboard.py          # Script ETL que regenera el dashboard
-│   ├── template.html                  # Template HTML base para inyección de datos
-│   ├── DATA_HISTORIA_DETALLE.xlsx     # Gestiones, compromisos, montos por ejecutivo/periodo
-│   ├── Bitacora.xlsx                  # Bitácora del cliente (operaciones diarias por producto)
-│   ├── CARGAS.xlsx                    # Registros y gestiones por periodo (eficiencia)
-│   ├── Detalle_Ejecutivo_2026.xlsx    # Detalle mensual por ejecutivo (monto, cantidad, tipo)
-│   ├── FACTURACION_PROVISIONES.xlsx   # Facturación real vs provisiones por OT/mes
-│   ├── Modelo_Facturacion.xlsx        # Tarifas C/IVA por producto para proyección
-│   └── RELACION_BITACORA_OT.txt      # Mapeo de productos bitácora ↔ OT facturación
+│   ├── generate_dashboard.py
+│   └── template.html
+├── create_flow_diagram.py
+├── flujo_operacional_scotiabank.png
+├── dashboard_scotiabank_fastco.html
+├── LOGO1.png
+└── README.md
 ```
 
-## Requisitos
+## 4) Inputs del ETL
 
-- **Python 3.10+**
-- **pandas** (`pip install pandas`)
-- **openpyxl** (`pip install openpyxl`)
+### 4.1 Fuentes SQL principales
 
-## Uso
+`Data/generate_dashboard.py` consulta principalmente:
+- `ALERTAS.dbo.BITACORA`
+- `PCVMEZA.QFASTCO_INFORMES.dbo.TBL_CIERRE_CALIDAD`
+- `BASE_CARGAS.DBO.TBL_CARGAS_POR_PRODUCTO`
+- `BASE_REPORTES.dbo.v3_Informe_x_ejecutivos_producto_dia`
+- `COMISIONES.dbo.TBL_VENTAS_PERIODO`
+- `ALERTAS.dbo.MAPA`
 
-### Regenerar el Dashboard
+### 4.2 Fallback locales (cuando SQL no responde)
+
+En `Data/`, el script puede usar:
+- `DATA_HISTORIA_DETALLE.xlsx`
+- `BITACORA.xlsx`
+- `CARGAS.xlsx`
+- `DETALLE_EJECUTIVO.xlsx`
+- `FACTURACION_PROVISIONES.xlsx`
+- `CALIDAD.xlsx`
+
+### 4.3 Inputs embebidos en codigo
+
+Se eliminaron dependencias manuales para:
+- `RELACION_BITACORA_OT.txt` (hoy embebido como `OT_MAP_EMBEDDED`)
+- `MODELO_FACTURACION.xlsx` (tarifas embebidas en `FACT_PROY_TARIFFS`)
+
+## 5) Variables de entorno SQL
+
+Variables soportadas:
+- `SCOTIA_SQL_SERVER` (default: `192.168.100.136`)
+- `SCOTIA_SQL_DATABASE` (default: `ALERTAS`)
+- `SCOTIA_SQL_CONNECTION_STRING` (opcional; si existe, tiene prioridad)
+
+El script prueba drivers ODBC compatibles y utiliza trusted connection.
+
+## 6) Stack tecnologico
+
+- Python 3.11+
+- pandas
+- numpy
+- pyodbc (SQL Server)
+- openpyxl (fallback Excel)
+- requests (UF API)
+- prophet (opcional, para una de las metodologias de proyeccion)
+- Frontend: HTML + CSS + JavaScript + Chart.js (CDN)
+
+## 7) Como ejecutar
+
+Desde la raiz del proyecto:
 
 ```powershell
-cd Data
-python generate_dashboard.py
+& ".\.venv\Scripts\python.exe" .\Data\generate_dashboard.py
 ```
 
-El script:
-1. Lee los 6 archivos de datos Excel/txt
-2. Procesa y cruza la información (ETL)
-3. Inyecta los datos como constantes JS en `template.html`
-4. Genera `dashboard_scotiabank_fastco.html` en la raíz del proyecto
+Salida esperada:
+- Archivo generado/actualizado: `dashboard_scotiabank_fastco.html`
+- Mensajes de estado por cada bloque de carga
 
-### Visualizar
+## 8) Pestañas del dashboard
 
-Abrir `dashboard_scotiabank_fastco.html` con doble-click en cualquier navegador moderno. No requiere servidor web.
+- Macro
+- Campanas
+- Mapa
+- Facturacion
+- Oportunidades
+- Ejecutivos
+- Correlacion
+- Diagnostico
 
-## Pestañas del Dashboard
+Notas funcionales recientes:
+- Campanas: en los comparativos "Gestion por Mes" y "Gestion por Dia" la seleccion de KPI es single-select.
+- Campanas: cada grafico comparativo incluye una tabla lateral con Actual, Anterior y Prom. 3M.
+- Mapa: nombres de campana/cartera mostrados desde origen SQL y etiquetados como `CARTERA | OT`.
 
-| Pestaña | Descripción |
-|---------|-------------|
-| **Macro** | Resumen ejecutivo con KPIs principales y tendencias globales |
-| **Campañas** | Desglose por tipo de campaña (Avance, TDC, PER, Plan Zero, etc.) |
-| **Bitácora** | Operaciones del cliente por día/mes, cruce seguro, composición |
-| **Facturación** | Facturación histórica, mensual, proyección por bitácora × tarifas |
-| **Oportunidades** | Palancas de crecimiento y simulador de escenarios |
-| **Ejecutivos** | Ranking, headcount, análisis de tiempos (TMO), productividad |
-| **Correlación** | Cruce entre datos FASTCO vs cliente, facturación vs provisión, HC |
-| **Diagnóstico** | Análisis Situación–Complicación–Resolución con datos reales |
+## 9) Logica funcional clave
 
-## Fuentes de Datos
+- Correlacion: cruza FASTCO, cliente y facturacion por producto/OT y mes.
+- Ejecutivos: ranking, headcount, tiempos (incluyendo conversion robusta de unidad para `TURNO`).
+- Facturacion: mezcla historico + proyeccion en base a UF y series de actividad.
+- Campanas: comparativos mensuales y diarios con filtros globales y tabla lateral de lectura rapida.
+- Mapa: visualizacion con etiquetas de campana alineadas al origen SQL (`CARTERA | OT`).
 
-| Archivo | Contenido | Métricas clave |
-|---------|-----------|----------------|
-| `DATA_HISTORIA_DETALLE.xlsx` | Gestiones CRM | Gestiones, compromisos, montos, contactabilidad, HC |
-| `Bitacora.xlsx` | Reporte del cliente | Operaciones por producto/día, montos, cruce seguro |
-| `CARGAS.xlsx` | Asignación de registros | Registros cargados vs gestionados (eficiencia) |
-| `Detalle_Ejecutivo_2026.xlsx` | Performance individual | Monto, cantidad, tipo por ejecutivo/mes |
-| `FACTURACION_PROVISIONES.xlsx` | Billing | Provisión vs facturación real por OT |
-| `Modelo_Facturacion.xlsx` | Tarifas vigentes | Precio C/IVA por producto para proyección |
-| `RELACION_BITACORA_OT.txt` | Mapeo | Relación columna bitácora ↔ producto/OT |
+## 10) Diagrama de arquitectura
 
-## Modelo de Facturación
+El diagrama se genera con:
 
-- **TDC**: Se factura por cantidad de operaciones (ventas), NO por monto
-  - TC Titular: $28.9K/op
-  - TC Adicional: $33.8K/op
-- **Avance Externo**: $15.4K/op
-- **Pago Flexible**: $15.2K/op
-- **Plan Zero PER**: $38.6K/op
-- **Costos fijos**: $8M Backoffice + $10M WEB por mes
+```powershell
+& ".\.venv\Scripts\python.exe" .\create_flow_diagram.py
+```
 
-## Tecnologías
+Archivo de salida:
+- `flujo_operacional_scotiabank.png`
 
-- **Frontend**: HTML5, CSS3, Chart.js 4.4.1 (CDN)
-- **ETL**: Python 3 + pandas + openpyxl
-- **Fuentes**: Plus Jakarta Sans, DM Mono, Syne (Google Fonts CDN), Calibri (títulos)
-- **Sin servidor**: Funciona 100% offline via `file://`
+## 11) Mantenimiento
 
-## Notas
-
-- Al actualizar cualquier archivo Excel, ejecutar `python Data/generate_dashboard.py` para reflejar los cambios.
-- El template (`Data/template.html`) debe mantenerse sincronizado con el dashboard antes de regenerar. El script lo usa como base para inyectar datos.
-- Los gráficos de Bitácora se muestran por día al seleccionar un mes específico en el filtro.
+- Si cambias logica visual o de componentes, editar `Data/template.html` y luego regenerar.
+- Si cambias logica ETL o fuentes, editar `Data/generate_dashboard.py`.
+- Mantener sincronizados `README.md` y `create_flow_diagram.py` cuando cambie la arquitectura.
