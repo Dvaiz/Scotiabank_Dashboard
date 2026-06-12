@@ -193,12 +193,12 @@
   <div class="exec-headline" style="border-color:rgba(61,124,244,.25);background:linear-gradient(135deg,rgba(61,124,244,.12),rgba(0,196,180,.08))">
     <div class="headline-left">
       <h1>4 Tipos de Campaña — Refinanciamiento lidera; TDC, el activo desaprovechado</h1>
-      <p>Refinanciamiento: 77.5% del monto comprometido. Avance: mayor contactabilidad (93.2%). TDC: 246K gestiones sin monetización directa. <span class="src">DATA_HISTORIA_DETALLE.xlsx</span></p>
+      <p>Refinanciamiento: 77.5% del monto comprometido. Avance: mayor contactabilidad (93.2%). TDC: 246K gestiones sin monetización directa. <span class="src">DATA_HISTORIA_DETALLE</span></p>
     </div>
   </div>
-  <div class="card" style="margin-bottom:14px"><div class="card-title">Desempeño por Tipo de Campaña <span class="src">DATA_HISTORIA_DETALLE.xlsx</span></div><div class="card-subtitle">Cruce por tipo de venta y métricas de contactabilidad</div><table class="tipo-table"><thead><tr><th>Tipo</th><th>Gestiones</th><th>Efectivos</th><th>Contactab.</th><th>Compromisos</th><th>Conv.</th><th>Monto Total</th><th>Ticket</th><th>St</th></tr></thead><tbody id="tipoTableBody"></tbody></table></div>
+  <div class="card" style="margin-bottom:14px"><div class="card-title">Desempeño por Tipo de Campaña <span class="src">DATA_HISTORIA_DETALLE</span></div><div class="card-subtitle">Cruce por tipo de venta y métricas de contactabilidad</div><table class="tipo-table"><thead><tr><th>Tipo</th><th>Gestiones</th><th>Efectivos</th><th>Contactab.</th><th>Compromisos</th><th>Conv.</th><th>Monto Total</th><th>Ticket</th><th>St</th></tr></thead><tbody id="tipoTableBody"></tbody></table></div>
   <div class="card" style="margin-top:14px">
-    <div class="card-title">Comparativo Cargas por Mes <span class="src">CARGAS.xlsx</span></div>
+    <div class="card-title">Comparativo Cargas por Mes <span class="src">CARGAS</span></div>
     <div class="card-subtitle">Registros recibidos: mes actual vs mes anterior, promedio móvil 3 meses y mismo mes año anterior</div>
     <canvas id="chartCargasComp" style="max-height:300px"></canvas>
   </div>
@@ -215,23 +215,24 @@
   </div>
   <!-- Comparativo mensual KPI -->
   <div class="card" style="margin-top:10px">
-    <div class="card-title">Comparativo de Gestión por Mes <span class="src">DATA_HISTORIA_DETALLE.xlsx</span></div>
+    <div class="card-title">Comparativo de Gestión por Mes <span class="src">DATA_HISTORIA_DETALLE</span></div>
     <div class="card-subtitle">Mes actual vs anterior, promedio 3M y mismo mes año anterior — selecciona un KPI</div>
     <div id="camp-pills-m" style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:16px"></div>
     <div id="camp-charts-m" style="display:grid;grid-template-columns:1fr;gap:12px"></div>
   </div>
   <!-- Comparativo diario KPI -->
   <div class="card" style="margin-top:14px">
-    <div class="card-title">Comparativo de Gestión por Día <span class="src">DATA_HISTORIA_DETALLE.xlsx</span></div>
+    <div class="card-title">Comparativo de Gestión por Día <span class="src">DATA_HISTORIA_DETALLE</span></div>
     <div class="card-subtitle">Compara el día hábil seleccionado entre todos los períodos — selecciona día y un KPI</div>
     <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px">
       <span style="font-size:11px;color:var(--text3);font-weight:500">Día hábil:</span>
       <select id="camp-day-sel" class="filter-select" style="width:120px" onchange="_setCampDay(this.value)"></select>
+      <span id="camp-day-info" style="font-size:11px;color:var(--text3)"></span>
     </div>
     <div id="camp-pills-d" style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:16px"></div>
     <div id="camp-charts-d" style="display:grid;grid-template-columns:1fr;gap:12px"></div>
   </div>
-  <div class="card" style="margin-top:14px"><div class="card-title">Tasa de Contactabilidad por Tipo <span class="src">DATA_HISTORIA_DETALLE.xlsx</span></div><div class="card-subtitle">Benchmark: 80%</div><canvas id="chartContacto"></canvas></div>
+  <div class="card" style="margin-top:14px"><div class="card-title">Tasa de Contactabilidad por Tipo <span class="src">DATA_HISTORIA_DETALLE</span></div><div class="card-subtitle">Benchmark: 80%</div><canvas id="chartContacto"></canvas></div>
 </div>
 
 <!-- ============= VIEW: BITÁCORA CLIENTE ============= -->
@@ -244,32 +245,32 @@
     </div>
     <div class="headline-right" id="bita-hl-right"></div>
   </div>
-  <div class="src-note">Fuente: Bitácora.xlsx</div>
+  <div class="src-note">Fuente: BITACORA</div>
   <div class="bita-kpi-grid" id="bita-kpis"></div>
   <div class="grid-2">
-    <div class="card"><div class="card-title">Operaciones por Producto (Mensual) <span class="src">BITACORA_CLIENTE.xlsx</span></div><div class="card-subtitle">Volumen mensual reportado por Scotiabank — stacked por producto</div><canvas id="chartBitaOps"></canvas></div>
-    <div class="card"><div class="card-title">Monto: Avance + Pago Flexible (MM$) <span class="src">BITACORA_CLIENTE.xlsx</span></div><div class="card-subtitle">Evolución montos reportados por el cliente</div><canvas id="chartBitaMonto"></canvas></div>
+    <div class="card"><div class="card-title">Operaciones por Producto (Mensual) <span class="src">BITACORA</span></div><div class="card-subtitle">Volumen mensual reportado por Scotiabank — stacked por producto</div><canvas id="chartBitaOps"></canvas></div>
+    <div class="card"><div class="card-title">Monto: Avance + Pago Flexible (MM$) <span class="src">BITACORA</span></div><div class="card-subtitle">Evolución montos reportados por el cliente</div><canvas id="chartBitaMonto"></canvas></div>
   </div>
   <div class="grid-2">
-    <div class="card"><div class="card-title">TDC: Titular vs Adicional vs Digital <span class="src">BITACORA_CLIENTE.xlsx</span></div><div class="card-subtitle">Evolución tarjetas de crédito activadas mensuales</div><canvas id="chartBitaTDC"></canvas></div>
-    <div class="card"><div class="card-title">Cruce Seguros Desgravamen vs Avance (%) <span class="src">BITACORA_CLIENTE.xlsx</span></div><div class="card-subtitle">Tendencia decreciente: de 57.4% en Mar-2025 a 29.0% en May-2026 — ⚠ alerta</div><canvas id="chartBitaCruce"></canvas></div>
+    <div class="card"><div class="card-title">TDC: Titular vs Adicional vs Digital <span class="src">BITACORA</span></div><div class="card-subtitle">Evolución tarjetas de crédito activadas mensuales</div><canvas id="chartBitaTDC"></canvas></div>
+    <div class="card"><div class="card-title">Cruce Seguros Desgravamen vs Avance (%) <span class="src">BITACORA</span></div><div class="card-subtitle">Tendencia decreciente: de 57.4% en Mar-2025 a 29.0% en May-2026 — ⚠ alerta</div><canvas id="chartBitaCruce"></canvas></div>
   </div>
   <div class="grid-2">
-    <div class="card"><div class="card-title">Operaciones Diarias Promedio por Mes <span class="src">BITACORA_CLIENTE.xlsx</span></div><div class="card-subtitle">Productividad diaria promedio (ops totales / días hábiles)</div><canvas id="chartBitaDaily"></canvas></div>
-    <div class="card"><div class="card-title">Composición Productos (%) <span class="src">BITACORA_CLIENTE.xlsx</span></div><div class="card-subtitle">Peso relativo de cada producto en volumen de operaciones</div><canvas id="chartBitaComp"></canvas></div>
+    <div class="card"><div class="card-title">Operaciones Diarias Promedio por Mes <span class="src">BITACORA</span></div><div class="card-subtitle">Productividad diaria promedio (ops totales / días hábiles)</div><canvas id="chartBitaDaily"></canvas></div>
+    <div class="card"><div class="card-title">Composición Productos (%) <span class="src">BITACORA</span></div><div class="card-subtitle">Peso relativo de cada producto en volumen de operaciones</div><canvas id="chartBitaComp"></canvas></div>
   </div>
   <!-- Proyección Facturación UF -->
   <div class="section-divider"><div class="section-divider-label">Proyección Facturación</div><div class="section-divider-line"></div></div>
   <div id="bita-fact-uf-header" style="margin-bottom:14px"></div>
-  <div class="src-note">Fuente: Bitácora.xlsx + UF BCCh</div>
+  <div class="src-note">Fuente: BITACORA + BCCH_UF</div>
   <div class="bita-kpi-grid" id="bita-fact-kpis" style="grid-template-columns:repeat(4,1fr)"></div>
   <div class="grid-2" style="margin-top:14px">
-    <div class="card"><div class="card-title">Facturación Histórica por Mes <span class="src">Bitácora + UF</span></div><div class="card-subtitle">Pago Flexible + Avance Externo acumulado mensual</div><canvas id="chartBitaFactHist"></canvas></div>
-    <div class="card"><div class="card-title">Proyección Cierre del Mes <span class="src">Modelo adaptativo</span></div><div class="card-subtitle">Real parcial vs. proyección de cierre — Pago Flexible y Avance</div><canvas id="chartBitaFactProy"></canvas></div>
+    <div class="card"><div class="card-title">Facturación Histórica por Mes <span class="src">BITACORA + BCCH_UF</span></div><div class="card-subtitle">Pago Flexible + Avance Externo acumulado mensual</div><canvas id="chartBitaFactHist"></canvas></div>
+    <div class="card"><div class="card-title">Proyección Cierre del Mes <span class="src">BITACORA + BCCH_UF</span></div><div class="card-subtitle">Real parcial vs. proyección de cierre — Pago Flexible y Avance</div><canvas id="chartBitaFactProy"></canvas></div>
   </div>
   <!-- Insights -->
   <div class="section-divider"><div class="section-divider-label">Insights Bitácora</div><div class="section-divider-line"></div></div>
-  <div class="src-note">Fuente: Bitácora.xlsx</div>
+  <div class="src-note">Fuente: BITACORA</div>
   <div class="grid-3">
     <div class="minto-box minto-com"><div class="minto-icon">📉</div><div><div class="minto-head">Cruce Seguro en caída libre</div><div class="minto-body">Desde 57.4% (Mar-25) a 29.0% (May-26). Cada punto porcentual perdido representa ~$17K en prima mensual. Acción: reforzar speech de ofrecimiento y revisar protocolo de cierre.</div></div></div>
     <div class="minto-box minto-sit"><div class="minto-icon">📊</div><div><div class="minto-head">Pago Flexible domina en volumen</div><div class="minto-body">33K operaciones con MM$147B en monto acumulado. Es el producto líder en volumen y monto del cliente. Su ticket promedio es $4.4M — superior al Avance ($3.4M).</div></div></div>
@@ -283,17 +284,17 @@
   <div class="exec-headline" style="border-color:rgba(245,166,35,.25);background:linear-gradient(135deg,rgba(245,166,35,.1),rgba(61,124,244,.06))">
     <div class="headline-left">
       <h1>Crecimiento 2020–2026: CAGR ~80% · 2025 primer año de leve contracción</h1>
-      <p>Facturación de MM$55 en 2020 a MM$3.267B en 2025. 2024 fue peak ($3.326B). 2025 –1.8%. 2026 proyecta ~$3.3B anual. <span class="src">FACTURACION_PROVISIONES.xlsx</span></p>
+      <p>Facturación de MM$55 en 2020 a MM$3.267B en 2025. 2024 fue peak ($3.326B). 2025 –1.8%. 2026 proyecta ~$3.3B anual. <span class="src">FACTURACION_PROVISIONES</span></p>
     </div>
     <div class="headline-right"><div class="hl-stat"><div class="hl-stat-val">$3.27B</div><div class="hl-stat-label">Fact. real 2025</div></div><div class="hl-stat"><div class="hl-stat-val">–1.8%</div><div class="hl-stat-label" style="color:var(--accent2)">vs 2024</div></div></div>
   </div>
   <div class="grid-2">
-    <div class="card"><div class="card-title">Facturación Real vs Provisión (2020–2026) <span class="src">FACTURACION_PROVISIONES.xlsx</span></div><div class="card-subtitle">Crecimiento sostenido 2021–2024 · Primera contracción 2025</div><canvas id="chartFacYear"></canvas></div>
-    <div class="card"><div class="card-title">Facturación Mensual 2025 vs 2026 <span class="src">FACTURACION_PROVISIONES.xlsx</span></div><div class="card-subtitle">Marzo 2026 supera a 2025 (+7.6%)</div><canvas id="chartFacMensual"></canvas></div>
+    <div class="card"><div class="card-title">Facturación Real vs Provisión (2020–2026) <span class="src">FACTURACION_PROVISIONES</span></div><div class="card-subtitle">Crecimiento sostenido 2021–2024 · Primera contracción 2025</div><canvas id="chartFacYear"></canvas></div>
+    <div class="card"><div class="card-title">Facturación Mensual 2025 vs 2026 <span class="src">FACTURACION_PROVISIONES</span></div><div class="card-subtitle">Marzo 2026 supera a 2025 (+7.6%)</div><canvas id="chartFacMensual"></canvas></div>
   </div>
   <div class="grid-2">
-    <div class="card"><div class="card-title">Top Carteras por Facturación <span class="src">FACTURACION_PROVISIONES.xlsx</span></div><div class="card-subtitle">Acumulado histórico real</div><canvas id="chartCarteras" style="max-height:220px"></canvas></div>
-    <div class="card"><div class="card-title">Ajuste Provisión vs Real por Cartera <span class="src">FACTURACION_PROVISIONES.xlsx</span></div><div class="card-subtitle">Positivo = subfacturado · Negativo = sobreprovisión</div><canvas id="chartAdj"></canvas></div>
+    <div class="card"><div class="card-title">Top Carteras por Facturación <span class="src">FACTURACION_PROVISIONES</span></div><div class="card-subtitle">Acumulado histórico real</div><canvas id="chartCarteras" style="max-height:220px"></canvas></div>
+    <div class="card"><div class="card-title">Ajuste Provisión vs Real por Cartera <span class="src">FACTURACION_PROVISIONES</span></div><div class="card-subtitle">Positivo = subfacturado · Negativo = sobreprovisión</div><canvas id="chartAdj"></canvas></div>
   </div>
 </div>
 
@@ -303,19 +304,19 @@
   <div class="exec-headline" style="border-color:rgba(0,196,180,.25);background:linear-gradient(135deg,rgba(0,196,180,.1),rgba(39,196,122,.06))">
     <div class="headline-left">
       <h1>3 alertas activas: TDC cayó –42% · Seguro en mínimo · Cargas sub-ejecutadas</h1>
-      <p>Conv. TDC: 6.32% (ENE-26) → 3.63% (MAY-26). Cruce seguro: 28.8% (mín. período). Eficiencia cargas 2026: 56.5% promedio vs 78.9% en ENE-26. Tres vectores de recuperación con impacto inmediato. <span class="src">DATA_HISTORIA_DETALLE.xlsx + CARGAS.xlsx + Bitácora.xlsx</span></p>
+      <p>Conv. TDC: 6.32% (ENE-26) → 3.63% (MAY-26). Cruce seguro: 28.8% (mín. período). Eficiencia cargas 2026: 56.5% promedio vs 78.9% en ENE-26. Tres vectores de recuperación con impacto inmediato. <span class="src">DATA_HISTORIA_DETALLE + CARGAS + BITACORA</span></p>
     </div>
   </div>
   <div class="grid-3">
-    <div class="opp-card"><div class="opp-title">📉 OPP 1: Recuperar Conversión TDC <span class="src">DATA_HISTORIA_DETALLE.xlsx</span></div><div class="opp-text">Conv. TDC: 6.32% (ENE-26) → 3.63% (MAY-26), –42% en 5 meses. 616K gestiones históricas con $0 monto. Con 35K efectivos/mes, volver a 6%:</div><div class="opp-value">+844 compromisos/mes</div></div>
-    <div class="opp-card"><div class="opp-title">📉 OPP 2: Cruce Seguro en Mínimo <span class="src">Bitácora.xlsx</span></div><div class="opp-text">28.8% (MAY-26) vs 39.3% (DIC-25). Caída de 10.5pp en 5 meses. Señal de recuperación en JUN-26 (40.5% parcial). Recuperar a 40%:</div><div class="opp-value">+~50 ops seguro/mes</div></div>
-    <div class="opp-card"><div class="opp-title">📦 OPP 3: Eficiencia Cargas <span class="src">CARGAS.xlsx</span></div><div class="opp-text">Prom. 2026: 56.5% vs peak 78.9% (ENE-26). MAR-26: 583K cargas, solo 35.7% gestionado. Con 334K cargas/mes promedio, subir a 70%:</div><div class="opp-value">+45K gestiones/mes</div></div>
+    <div class="opp-card"><div class="opp-title">📉 OPP 1: Recuperar Conversión TDC <span class="src">DATA_HISTORIA_DETALLE</span></div><div class="opp-text">Conv. TDC: 6.32% (ENE-26) → 3.63% (MAY-26), –42% en 5 meses. 616K gestiones históricas con $0 monto. Con 35K efectivos/mes, volver a 6%:</div><div class="opp-value">+844 compromisos/mes</div></div>
+    <div class="opp-card"><div class="opp-title">📉 OPP 2: Cruce Seguro en Mínimo <span class="src">BITACORA</span></div><div class="opp-text">28.8% (MAY-26) vs 39.3% (DIC-25). Caída de 10.5pp en 5 meses. Señal de recuperación en JUN-26 (40.5% parcial). Recuperar a 40%:</div><div class="opp-value">+~50 ops seguro/mes</div></div>
+    <div class="opp-card"><div class="opp-title">📦 OPP 3: Eficiencia Cargas <span class="src">CARGAS</span></div><div class="opp-text">Prom. 2026: 56.5% vs peak 78.9% (ENE-26). MAR-26: 583K cargas, solo 35.7% gestionado. Con 334K cargas/mes promedio, subir a 70%:</div><div class="opp-value">+45K gestiones/mes</div></div>
   </div>
   <div class="grid-2">
-    <div class="card"><div class="card-title">Simulador de Escenarios <span class="src">DATA_HISTORIA_DETALLE.xlsx</span></div><div class="card-subtitle">Mejora de conversión por tipo</div><canvas id="chartSimulator"></canvas></div>
-    <div class="card"><div class="card-title">Proyección Facturación 2026 <span class="src">FACTURACION_PROVISIONES.xlsx</span></div><div class="card-subtitle">3 escenarios basados en ritmo YoY — ENE-ABR-26 acumula $1.106B (–12.2% vs 2025)</div><canvas id="chartProyeccion"></canvas></div>
+    <div class="card"><div class="card-title">Simulador de Escenarios <span class="src">DATA_HISTORIA_DETALLE</span></div><div class="card-subtitle">Mejora de conversión por tipo</div><canvas id="chartSimulator"></canvas></div>
+    <div class="card"><div class="card-title">Proyección Facturación 2026 <span class="src">FACTURACION_PROVISIONES</span></div><div class="card-subtitle">3 escenarios basados en ritmo YoY — ENE-ABR-26 acumula $1.106B (–12.2% vs 2025)</div><canvas id="chartProyeccion"></canvas></div>
   </div>
-  <div class="src-note">Fuente: FACTURACION_PROVISIONES.xlsx · Real 2025: $3.446B · Acumulado 2026 ENE-ABR: $1.106B</div>
+  <div class="src-note">Fuente: FACTURACION_PROVISIONES · Real 2025: $3.446B · Acumulado 2026 ENE-ABR: $1.106B</div>
   <div class="grid-3">
     <div class="proj-scenario"><div class="proj-scenario-head" style="color:var(--accent2)">🔴 Pesimista</div><div class="proj-scenario-items"><div class="proj-item"><span class="proj-item-label">Anual 2026</span><span class="proj-item-val">$2.92B</span></div><div class="proj-item"><span class="proj-item-label">vs 2025</span><span class="proj-item-val" style="color:var(--accent2)">–15.2%</span></div><div class="proj-item"><span class="proj-item-label">Supuesto</span><span class="proj-item-val" style="font-size:9px;color:var(--text3)">Ritmo ABR-26 sostenido</span></div></div></div>
     <div class="proj-scenario" style="border-color:var(--gold)"><div class="proj-scenario-head" style="color:var(--gold)">🟡 Base</div><div class="proj-scenario-items"><div class="proj-item"><span class="proj-item-label">Anual 2026</span><span class="proj-item-val">$3.03B</span></div><div class="proj-item"><span class="proj-item-label">vs 2025</span><span class="proj-item-val" style="color:var(--gold)">–12.2%</span></div><div class="proj-item"><span class="proj-item-label">Supuesto</span><span class="proj-item-val" style="font-size:9px;color:var(--text3)">Prom. ENE-ABR mantenido</span></div></div></div>
@@ -337,45 +338,52 @@
   <!-- Ejecutivo selector -->
   <div class="filter-bar" id="filter-ej-user"></div>
   <!-- KPIs -->
-  <div class="src-note">Fuente: DATA_HISTORIA_DETALLE.xlsx</div>
+  <div class="src-note">Fuente: DATA_HISTORIA_DETALLE</div>
   <div class="bita-kpi-grid" id="ej-kpis"></div>
   <!-- Charts -->
   <div class="grid-2">
-    <div class="card"><div class="card-title">Monto Comprometido por Mes <span class="src">DATA_HISTORIA_DETALLE.xlsx</span></div><div class="card-subtitle">Comparativo mensual — top ejecutivos o ejecutivo seleccionado</div><canvas id="chartEjMonto"></canvas></div>
-    <div class="card"><div class="card-title">Gestiones por Mes <span class="src">DATA_HISTORIA_DETALLE.xlsx</span></div><div class="card-subtitle">Volumen de gestiones realizadas por período</div><canvas id="chartEjGest"></canvas></div>
+    <div class="card"><div class="card-title">Monto Comprometido por Mes <span class="src">DATA_HISTORIA_DETALLE</span></div><div class="card-subtitle">Comparativo mensual — top ejecutivos o ejecutivo seleccionado</div><canvas id="chartEjMonto"></canvas></div>
+    <div class="card"><div class="card-title">Gestiones por Mes <span class="src">DATA_HISTORIA_DETALLE</span></div><div class="card-subtitle">Volumen de gestiones realizadas por período</div><canvas id="chartEjGest"></canvas></div>
   </div>
   <div class="grid-2">
-    <div class="card"><div class="card-title">Tasa de Contactabilidad por Mes (%) <span class="src">DATA_HISTORIA_DETALLE.xlsx</span></div><div class="card-subtitle">Benchmark: 81.9% — Evolución mensual por ejecutivo</div><canvas id="chartEjTasa2"></canvas></div>
-    <div class="card"><div class="card-title">Compromisos por Mes <span class="src">DATA_HISTORIA_DETALLE.xlsx</span></div><div class="card-subtitle">Conversiones efectivas generadas por mes</div><canvas id="chartEjComp"></canvas></div>
+    <div class="card"><div class="card-title">Tasa de Contactabilidad por Mes (%) <span class="src">DATA_HISTORIA_DETALLE</span></div><div class="card-subtitle">Benchmark: 81.9% — Evolución mensual por ejecutivo</div><canvas id="chartEjTasa2"></canvas></div>
+    <div class="card"><div class="card-title">Compromisos por Mes <span class="src">DATA_HISTORIA_DETALLE</span></div><div class="card-subtitle">Conversiones efectivas generadas por mes</div><canvas id="chartEjComp"></canvas></div>
   </div>
   <!-- Table -->
   <div class="card" id="card-ej-mensual">
-    <div class="card-title"><span>Detalle Mensual por Ejecutivo <span class="src">DATA_HISTORIA_DETALLE.xlsx</span></span><span class="collapse-toggle" onclick="toggleCardCollapse('card-ej-mensual')" title="Expandir/Contraer">+</span></div>
+    <div class="card-title"><span>Detalle Mensual por Ejecutivo <span class="src">DATA_HISTORIA_DETALLE</span></span><span class="collapse-toggle" onclick="toggleCardCollapse('card-ej-mensual')" title="Expandir/Contraer">+</span></div>
     <div class="collapse-body" style="display:none">
       <div class="card-subtitle">Métricas cruzadas por usuario y período</div>
       <table class="tipo-table"><thead><tr><th>Ejecutivo</th><th>Período</th><th>Gestiones</th><th>Efectivos</th><th>Contact.%</th><th>Compromisos</th><th>Conv.%</th><th>Monto</th></tr></thead><tbody id="ejTableBody"></tbody></table>
+    </div>
+  </div>
+  <div class="card" id="card-ej-cuartiles">
+    <div class="card-title"><span>Cuartilización Mensual por Ejecutivo <span class="src">DATA_HISTORIA_DETALLE</span></span><span class="collapse-toggle" onclick="toggleCardCollapse('card-ej-cuartiles')" title="Expandir/Contraer">+</span></div>
+    <div class="collapse-body" style="display:none">
+      <div class="card-subtitle">Clasificación mensual por ejecutivo según compromisos y monto</div>
+      <table class="tipo-table"><thead><tr><th>Ejecutivo</th><th>CUARTIL (Q y Monto)</th><th>Período</th><th>Gestiones</th><th>Efectivos</th><th>Contact.%</th><th>Compromisos</th><th>Conv.%</th><th>Monto</th></tr></thead><tbody id="ejQuartileTableBody"></tbody></table>
     </div>
   </div>
   <!-- Headcount & Tiempos Section -->
   <div class="exec-headline" style="margin-top:24px;border-color:rgba(61,124,244,.25);background:linear-gradient(135deg,rgba(61,124,244,.1),rgba(0,196,180,.06))">
     <div class="headline-left">
       <h1>Headcount & Análisis de Tiempos</h1>
-      <p>Usuarios activos por día/mes y distribución de horas por ejecutivo (hablado, disponible, TMO). Origen: DATA_HISTORIA_DETALLE.xlsx (CODIGO_USUARIO).</p>
+      <p>Usuarios activos por día/mes y distribución de horas por ejecutivo (hablado, disponible, TMO). Origen: DATA_HISTORIA_DETALLE (CODIGO_USUARIO).</p>
     </div>
   </div>
-  <div class="src-note">Fuente: DATA_HISTORIA_DETALLE.xlsx</div>
+  <div class="src-note">Fuente: DATA_HISTORIA_DETALLE</div>
   <div class="bita-kpi-grid" id="ej-hc-kpis"></div>
   <div class="grid-2">
-    <div class="card"><div class="card-title">Headcount Promedio por Mes <span class="src">DATA_HISTORIA_DETALLE.xlsx</span></div><div class="card-subtitle">Ejecutivos distintos activos por día (promedio mensual)</div><canvas id="chartEjHC"></canvas></div>
-    <div class="card"><div class="card-title">Horas Hablado vs Disponible (Promedio/Ejecutivo) <span class="src">DATA_HISTORIA_DETALLE.xlsx</span></div><div class="card-subtitle">Distribución promedio de tiempo por usuario por mes</div><canvas id="chartEjTiempos"></canvas></div>
+    <div class="card"><div class="card-title">Headcount Promedio por Mes <span class="src">DATA_HISTORIA_DETALLE</span></div><div class="card-subtitle">Ejecutivos distintos activos por día (promedio mensual)</div><canvas id="chartEjHC"></canvas></div>
+    <div class="card"><div class="card-title">Horas Hablado vs Disponible (Promedio/Ejecutivo) <span class="src">DATA_HISTORIA_DETALLE</span></div><div class="card-subtitle">Distribución promedio de tiempo por usuario por mes</div><canvas id="chartEjTiempos"></canvas></div>
   </div>
   <div class="grid-2">
-    <div class="card"><div class="card-title">TMO Promedio por Mes (seg) <span class="src">DATA_HISTORIA_DETALLE.xlsx</span></div><div class="card-subtitle">Tiempo medio de operación por gestión — tendencia mensual</div><canvas id="chartEjTMO"></canvas></div>
-    <div class="card"><div class="card-title">Ocupación: Hablado / Turno (%) <span class="src">DATA_HISTORIA_DETALLE.xlsx</span></div><div class="card-subtitle">% del turno dedicado a llamadas (productividad telefónica)</div><canvas id="chartEjOcup"></canvas></div>
+    <div class="card"><div class="card-title">TMO Promedio por Mes (seg) <span class="src">DATA_HISTORIA_DETALLE</span></div><div class="card-subtitle">Tiempo medio de operación por gestión — tendencia mensual</div><canvas id="chartEjTMO"></canvas></div>
+    <div class="card"><div class="card-title">Ocupación: Hablado / Turno (%) <span class="src">DATA_HISTORIA_DETALLE</span></div><div class="card-subtitle">% del turno dedicado a llamadas (productividad telefónica)</div><canvas id="chartEjOcup"></canvas></div>
   </div>
   <!-- Time detail table -->
   <div class="card" id="card-ej-tiempos">
-    <div class="card-title"><span>Detalle Tiempos por Ejecutivo <span class="src">DATA_HISTORIA_DETALLE.xlsx</span></span><span class="collapse-toggle" onclick="toggleCardCollapse('card-ej-tiempos')" title="Expandir/Contraer">+</span></div>
+    <div class="card-title"><span>Detalle Tiempos por Ejecutivo <span class="src">DATA_HISTORIA_DETALLE</span></span><span class="collapse-toggle" onclick="toggleCardCollapse('card-ej-tiempos')" title="Expandir/Contraer">+</span></div>
     <div class="collapse-body" style="display:none">
       <div class="card-subtitle">Horas hablado, disponible, TMO y ocupación por usuario y mes</div>
       <table class="tipo-table"><thead><tr><th>Ejecutivo</th><th>Período</th><th>Días</th><th>Hablado (h)</th><th>Disponible (h)</th><th>TMO (seg)</th><th>Turno (h)</th><th>Ocupación %</th><th>Gest/Día</th></tr></thead><tbody id="ejTiemposTableBody"></tbody></table>
@@ -386,29 +394,29 @@
   <div class="exec-headline" style="margin-top:24px;border-color:rgba(245,166,35,.25);background:linear-gradient(135deg,rgba(245,166,35,.08),rgba(39,196,122,.06))">
     <div class="headline-left">
       <h1>Calidad de Gestión</h1>
-      <p>Nota promedio por ciclo, campaña y ejecutivo. Escala 0–1. Origen: CALIDAD.xlsx.</p>
+      <p>Nota promedio por ciclo, campaña y ejecutivo. Escala 0–1. Origen: CALIDAD.</p>
     </div>
   </div>
   <!-- Filtros calidad -->
   <div class="filter-bar" id="filter-cal-periodo"></div>
   <div class="filter-bar" id="filter-cal-extra" style="gap:10px"></div>
   <!-- Gráficos calidad -->
-  <div class="src-note">Fuente: CALIDAD.xlsx</div>
+  <div class="src-note">Fuente: CALIDAD</div>
   <div class="grid-2">
     <div class="card">
-      <div class="card-title">Nota Promedio por Período <span class="src">CALIDAD.xlsx</span></div>
+      <div class="card-title">Nota Promedio por Período <span class="src">CALIDAD</span></div>
       <div class="card-subtitle">Comparativo mensual — línea general y desglose por ciclo o campaña</div>
       <canvas id="chartCalMes"></canvas>
     </div>
     <div class="card">
-      <div class="card-title">Nota por Ciclo <span class="src">CALIDAD.xlsx</span></div>
+      <div class="card-title">Nota por Ciclo <span class="src">CALIDAD</span></div>
       <div class="card-subtitle">Promedio de nota por ciclo en el período seleccionado</div>
       <canvas id="chartCalCiclo"></canvas>
     </div>
   </div>
   <!-- Ranking ejecutivos calidad -->
   <div class="card" id="card-cal-ranking">
-    <div class="card-title"><span>Ranking Ejecutivos por Nota <span class="src">CALIDAD.xlsx</span></span><span class="collapse-toggle" onclick="toggleCardCollapse('card-cal-ranking')" title="Expandir/Contraer">+</span></div>
+    <div class="card-title"><span>Ranking Ejecutivos por Nota <span class="src">CALIDAD</span></span><span class="collapse-toggle" onclick="toggleCardCollapse('card-cal-ranking')" title="Expandir/Contraer">+</span></div>
     <div class="collapse-body">
       <div class="card-subtitle">Top / bottom 20 ejecutivos por nota promedio — período y campaña seleccionados</div>
       <canvas id="chartCalRanking" style="max-height:380px"></canvas>
@@ -422,12 +430,12 @@
   <div class="exec-headline" style="border-color:rgba(138,43,226,.25);background:linear-gradient(135deg,rgba(138,43,226,.1),rgba(61,124,244,.06))">
     <div class="headline-left">
       <h1 id="corr-h1">Correlación 3 fuentes: Facturación × Bitácora Cliente × Gestión FASTCO</h1>
-      <p>Cruce por OT: FACTURACION_PROVISIONES ↔ RELACION_BITACORA_OT ↔ BITACORA_CLIENTE ↔ DATA_HISTORIA_DETALLE. Visión integrada de lo que facturamos, lo que el cliente reporta y lo que nuestros ejecutivos gestionan.</p>
+      <p>Cruce por OT: FACTURACION_PROVISIONES ↔ RELACION_BITACORA_OT ↔ BITACORA ↔ DATA_HISTORIA_DETALLE. Visión integrada de lo que facturamos, lo que el cliente reporta y lo que nuestros ejecutivos gestionan.</p>
     </div>
   </div>
 
   <!-- KPIs de correlación -->
-  <div class="src-note">Fuente: FACTURACION_PROVISIONES.xlsx + BITACORA_CLIENTE.xlsx + DATA_HISTORIA_DETALLE.xlsx</div>
+  <div class="src-note">Fuente: FACTURACION_PROVISIONES + BITACORA + DATA_HISTORIA_DETALLE</div>
   <div class="bita-kpi-grid" id="corr-kpis"></div>
 
   <!-- Selector de producto -->
@@ -435,16 +443,16 @@
 
   <!-- Main correlation charts -->
   <div class="grid-2">
-    <div class="card"><div class="card-title">Ops Bitácora vs Compromisos FASTCO <span class="src">BITACORA_CLIENTE.xlsx + DATA_HISTORIA_DETALLE.xlsx</span></div><div class="card-subtitle">¿Lo que reporta Scotiabank coincide con lo que registramos?</div><canvas id="chartCorrOps"></canvas></div>
-    <div class="card"><div class="card-title">Monto Bitácora vs Monto FASTCO (MM$) <span class="src">BITACORA_CLIENTE.xlsx + DATA_HISTORIA_DETALLE.xlsx</span></div><div class="card-subtitle">Diferencial entre monto informado por cliente y monto comprometido en CRM</div><canvas id="chartCorrMonto"></canvas></div>
+    <div class="card"><div class="card-title">Ops Bitácora vs Compromisos FASTCO <span class="src">BITACORA + DATA_HISTORIA_DETALLE</span></div><div class="card-subtitle">¿Lo que reporta Scotiabank coincide con lo que registramos?</div><canvas id="chartCorrOps"></canvas></div>
+    <div class="card"><div class="card-title">Monto Bitácora vs Monto FASTCO (MM$) <span class="src">BITACORA + DATA_HISTORIA_DETALLE</span></div><div class="card-subtitle">Diferencial entre monto informado por cliente y monto comprometido en CRM</div><canvas id="chartCorrMonto"></canvas></div>
   </div>
   <div class="grid-2">
-    <div class="card"><div class="card-title">Facturación Real vs Provisión por OT (MM$) <span class="src">FACTURACION_PROVISIONES.xlsx</span></div><div class="card-subtitle">Delta facturación mensual del producto seleccionado</div><canvas id="chartCorrFac"></canvas></div>
-    <div class="card"><div class="card-title">Tasa Conversión FASTCO vs Volumen Cliente <span class="src">DATA_HISTORIA_DETALLE.xlsx + BITACORA_CLIENTE.xlsx</span></div><div class="card-subtitle">Eficiencia interna vs escala entregada por Scotiabank</div><canvas id="chartCorrEff"></canvas></div>
+    <div class="card"><div class="card-title">Facturación Real vs Provisión por OT (MM$) <span class="src">FACTURACION_PROVISIONES</span></div><div class="card-subtitle">Delta facturación mensual del producto seleccionado</div><canvas id="chartCorrFac"></canvas></div>
+    <div class="card"><div class="card-title">Tasa Conversión FASTCO vs Volumen Cliente <span class="src">DATA_HISTORIA_DETALLE + BITACORA</span></div><div class="card-subtitle">Eficiencia interna vs escala entregada por Scotiabank</div><canvas id="chartCorrEff"></canvas></div>
   </div>
   <div class="grid-2">
-    <div class="card"><div class="card-title">Headcount vs Gestiones <span class="src">DATA_HISTORIA_DETALLE.xlsx</span></div><div class="card-subtitle">Ejecutivos promedio diarios vs volumen de gestiones — productividad por HC</div><canvas id="chartCorrHC"></canvas></div>
-    <div class="card"><div class="card-title">Productividad por Ejecutivo <span class="src">DATA_HISTORIA_DETALLE.xlsx</span></div><div class="card-subtitle">Gestiones / HC promedio por mes — eficiencia operativa</div><canvas id="chartCorrProdHC"></canvas></div>
+    <div class="card"><div class="card-title">Headcount vs Gestiones <span class="src">DATA_HISTORIA_DETALLE</span></div><div class="card-subtitle">Ejecutivos promedio diarios vs volumen de gestiones — productividad por HC</div><canvas id="chartCorrHC"></canvas></div>
+    <div class="card"><div class="card-title">Productividad por Ejecutivo <span class="src">DATA_HISTORIA_DETALLE</span></div><div class="card-subtitle">Gestiones / HC promedio por mes — eficiencia operativa</div><canvas id="chartCorrProdHC"></canvas></div>
   </div>
 
   <!-- Correlation matrix: monthly view -->
@@ -460,36 +468,36 @@
 
   <!-- Executive / daily drill-down -->
   <div class="grid-2">
-    <div class="card"><div class="card-title">Ejecutivos Activos y Productividad por OT <span class="src">DATA_HISTORIA_DETALLE.xlsx</span></div><div class="card-subtitle">Cantidad de ejecutivos y compromisos por ejecutivo</div><canvas id="chartCorrEjec"></canvas></div>
-    <div class="card"><div class="card-title">Gestiones Promedio/Mes por OT <span class="src">DATA_HISTORIA_DETALLE.xlsx</span></div><div class="card-subtitle">Volumen promedio mensual — solo meses con data detallada</div><canvas id="chartCorrDaily"></canvas></div>
+    <div class="card"><div class="card-title">Ejecutivos Activos y Productividad por OT <span class="src">DATA_HISTORIA_DETALLE</span></div><div class="card-subtitle">Cantidad de ejecutivos y compromisos por ejecutivo</div><canvas id="chartCorrEjec"></canvas></div>
+    <div class="card"><div class="card-title">Gestiones Promedio/Mes por OT <span class="src">DATA_HISTORIA_DETALLE</span></div><div class="card-subtitle">Volumen promedio mensual — solo meses con data detallada</div><canvas id="chartCorrDaily"></canvas></div>
   </div>
 
   <!-- Insights -->
   <div class="section-divider"><div class="section-divider-label">Insights de Correlación</div><div class="section-divider-line"></div></div>
-  <div class="src-note">Fuente: RELACION_BITACORA_OT + FACTURACION_PROVISIONES.xlsx + BITACORA_CLIENTE.xlsx + DATA_HISTORIA_DETALLE.xlsx</div>
+  <div class="src-note">Fuente: RELACION_BITACORA_OT + FACTURACION_PROVISIONES + BITACORA + DATA_HISTORIA_DETALLE</div>
   <div class="grid-3" id="corr-insights"></div>
 </div>
 
 <!-- ============= VIEW: DIAGNÓSTICO MINTO ============= -->
 <div id="view-minto" class="view">
   <div class="exec-headline" style="border-color:rgba(61,124,244,.25);background:linear-gradient(135deg,rgba(61,124,244,.1),rgba(0,196,180,.06))">
-    <div class="headline-left"><h1>Diagnóstico Ejecutivo · Situación → Complicación → Resolución</h1><p>FP&A Control de Gestión · MAY 2025–JUN 2026 · Basado en DATA_HISTORIA_DETALLE + Bitácora + CARGAS + Modelo Facturación</p></div>
+    <div class="headline-left"><h1>Diagnóstico Ejecutivo · Situación → Complicación → Resolución</h1><p>FP&A Control de Gestión · MAY 2025–JUN 2026 · Basado en DATA_HISTORIA_DETALLE + BITACORA + CARGAS + FACTURACION_PROVISIONES</p></div>
   </div>
   <div class="section-divider"><div class="section-divider-label">Situación</div><div class="section-divider-line"></div></div>
-  <div class="src-note">Fuente: DATA_HISTORIA_DETALLE.xlsx + Bitácora.xlsx + FACTURACION_PROVISIONES.xlsx</div>
+  <div class="src-note">Fuente: DATA_HISTORIA_DETALLE + BITACORA + FACTURACION_PROVISIONES</div>
   <div class="minto-box minto-sit"><div class="minto-icon">📊</div><div><div class="minto-head">Televentas FASTCO: 14 meses, 2.34M gestiones, 60.4K compromisos, $160.1B comprometidos</div><div class="minto-body">MAY-25 → JUN-26. Contactabilidad estable 82.4%. 152 ejecutivos distintos. Refinanciamiento lidera: 36.6% de gestiones y 74.9% del monto ($120.3B, ticket $4.4M). Avance: 93.5% contactabilidad (el más alto). TDC: 26.3% de gestiones, $0 monto CRM. Consumo: 10.7% gestiones, ticket más alto ($10.8M). Mejor mes: MAR-26 (208K gest, 6.316 compromisos, $17.5B).</div></div></div>
   <div class="minto-box minto-sit"><div class="minto-icon">📋</div><div><div class="minto-head">Bitácora Cliente MAR-25–JUN-26: MAR-26 fue el pico, MAY-26 inicia caída</div><div class="minto-body">Pago Flexible lidera: ops/mes pico 2.967 (MAR-26) → 1.682 (MAY-26, –43%). Avance: pico 1.055 (MAR-26) → 455 (MAY-26, –57%). Cruce seguro: 39.3% (DIC-25) → 28.8% (MAY-26), mínimo del período. JUN-26 parcial muestra recuperación del cruce a 40.5%, pero volumen de ops aún bajo.</div></div></div>
   <div class="minto-box minto-sit"><div class="minto-icon">💰</div><div><div class="minto-head">Facturación 2026: $1.106B acumulado ENE-ABR — –12.2% YoY vs mismo período 2025</div><div class="minto-body">2025 real: $3.446B. 2026 ENE-ABR: $1.106B (2025 ENE-ABR: $1.259B). Único mes positivo: MAR-26 ($359.3MM, +2.4% YoY). Peor mes: ABR-26 ($226.3MM, –26.8% YoY). Positivo: real 2026 supera provisión en +$23.8MM (+2.2%). Cargas 2026: 301K–583K/mes, eficiencia promedio 56.5%.</div></div></div>
 
   <div class="section-divider"><div class="section-divider-label">Complicación</div><div class="section-divider-line"></div></div>
-  <div class="src-note">Fuente: DATA_HISTORIA_DETALLE.xlsx + CARGAS.xlsx + Bitácora.xlsx</div>
+  <div class="src-note">Fuente: DATA_HISTORIA_DETALLE + CARGAS + BITACORA</div>
   <div class="minto-box minto-com"><div class="minto-icon">⚠️</div><div><div class="minto-head">TDC: conv. en caída libre — 6.32% (ENE-26) → 3.63% (MAY-26), –42% en 5 meses</div><div class="minto-body">TDC concentra 26.3% del total de gestiones (616K) con $0 monto comprometido en CRM. La conversión tocó máximo en ENE-26 (6.32%) y cayó consistentemente hasta 3.63% en MAY-26. Si continúa la tendencia, Q3-26 podría caer bajo 3%. En MAY-26 con ~35K efectivos/mes, recuperar a 6% = +844 compromisos/mes. La recuperación parcial en JUN-26 (4.22%) es insuficiente.</div></div></div>
   <div class="minto-box minto-com"><div class="minto-icon">📉</div><div><div class="minto-head">Cruce seguro en mínimo del período: 28.8% (MAY-26) vs 39.3% (DIC-25) — –10.5pp</div><div class="minto-body">En 5 meses el cruce de seguro desgravamen sobre Avance perdió 10.5 puntos porcentuales. MAY-26 con 455 ops Avance: solo 131 seguros vs 179 al 39.3%. Cada punto adicional = ~4-5 operaciones/mes. JUN-26 muestra señal positiva (40.5% parcial), pero es volátil. Requiere protocolo de ofrecimiento consistente y supervisión diaria.</div></div></div>
   <div class="minto-box minto-com"><div class="minto-icon">📉</div><div><div class="minto-head">Eficiencia cargas 2026 irregular: pico 78.9% (ENE) vs mínimo 35.7% (MAR) con 583K cargas</div><div class="minto-body">MAR-26 fue el mes de mayor carga (583K registros) pero el peor en eficiencia (35.7%). Promedio 2026: 56.5%. En cambio ENE-26 con 205K cargas logró 78.9% — menos volumen, mejor gestión. El problema: cargas masivas sin escalar HC ni priorización. ABR-26 recuperó a 71.2% con 258K cargas, demostrando que la eficiencia es alcanzable.</div></div></div>
   <div class="minto-box minto-com"><div class="minto-icon">📉</div><div><div class="minto-head">Facturación ABR-26: –26.8% YoY — el peor mes del período frente a 2025</div><div class="minto-body">ABR-26 facturó $226.3MM vs $309.2MM en ABR-25. La conversión general cayó de 3.70% (MAR-26) a 2.55% (ABR-26), lo que impactó directamente la facturación por compromisos. El acumulado ENE-ABR 2026 cierra con –12.2% YoY respecto a 2025. Si el ritmo de ABR-26 se repite en H2, el cierre anual 2026 quedaría en ~$2.9B (–15.2% vs 2025).</div></div></div>
 
   <div class="section-divider"><div class="section-divider-label">Resolución</div><div class="section-divider-line"></div></div>
-  <div class="src-note">Fuente: Análisis cruzado — DATA_HISTORIA_DETALLE.xlsx + Bitácora.xlsx + FACTURACION_PROVISIONES.xlsx</div>
+  <div class="src-note">Fuente: Análisis cruzado — DATA_HISTORIA_DETALLE + BITACORA + FACTURACION_PROVISIONES</div>
   <div class="minto-box minto-res"><div class="minto-icon">✅</div><div><div class="minto-head">R1: Recuperar conv. TDC ≥6% — 30 días — revertir caída ENE→MAY-26</div><div class="minto-body">Comparar speech ENE-26 (6.32%) vs MAY-26 (3.63%): identificar diferencial en protocolo de cierre. Con ~35K efectivos TDC/mes, recuperar a 6% = +844 compromisos/mes (×2.5 respecto a MAY-26). JUN-26 muestra leve rebote (4.22%) — capitalizar el impulso. Palancas: escucha de calidad + feedback diario a supervisores TDC. Owner: Calidad + Supervisores.</div></div></div>
   <div class="minto-box minto-res"><div class="minto-icon">✅</div><div><div class="minto-head">R2: Cruce seguro ≥38% sostenido — 30 días — JUN-26 ya mostró 40.5% parcial</div><div class="minto-body">La señal positiva de JUN-26 (40.5%) confirma que la base puede responder. Acción inmediata: activar monitoreo diario de cruce por ejecutivo (disponible en pestaña Correlación). Incentivo por cruce >35% esta semana. Cada 5pp de recuperación ≈ +23 operaciones/mes adicionales de seguro. Meta: estabilizar ≥38% en julio antes de caída estacional. Owner: Supervisores Avance.</div></div></div>
   <div class="minto-box minto-res"><div class="minto-icon">✅</div><div><div class="minto-head">R3: Eficiencia cargas ≥70% — 60 días — ABR-26 lo logró (71.2%) con 258K cargas</div><div class="minto-body">ABR-26 demostró que 70%+ es alcanzable: 258K cargas → 184K gestiones. El problema es en meses de carga masiva (MAR-26: 583K, solo 35.7%). Regla operativa: no asignar más de 350K cargas sin confirmar HC disponible. Priorizar registros activos por historial de contactabilidad. Con 334K cargas/mes promedio a 70%: +45K gestiones adicionales/mes. Owner: Ops + Planificación.</div></div></div>
@@ -497,7 +505,7 @@
   <div class="minto-box minto-res"><div class="minto-icon">✅</div><div><div class="minto-head">R5: Sostener ritmo facturación ≥$300MM/mes en H2-26 — 90 días</div><div class="minto-body">MAR-26 demostró capacidad ($359.3MM, +2.4% YoY). Requiere convergencia de tres factores: conv>3.5% + Pago Flexible >2.5K ops/mes + Avance >800 ops/mes. Actualmente los tres están por debajo (MAY-26: conv 2.66%, PF 1.682, AV 455). El escenario base proyecta $3.03B para 2026 (–12.2% vs $3.45B en 2025). Alcanzar $3.16B (–8.3%) requiere que al menos 4 de los 8 meses restantes superen $300MM. Owner: Dirección + Comercial.</div></div></div>
 
   <div class="section-divider"><div class="section-divider-label">Impacto Financiero Proyectado</div><div class="section-divider-line"></div></div>
-  <div class="src-note">Fuente: FACTURACION_PROVISIONES.xlsx + DATA_HISTORIA_DETALLE.xlsx</div>
+  <div class="src-note">Fuente: FACTURACION_PROVISIONES + DATA_HISTORIA_DETALLE</div>
   <div class="grid-3">
     <div class="proj-scenario" style="border-color:rgba(232,56,42,.4)"><div class="proj-scenario-head" style="color:var(--accent2)">🔴 Urgente (30 días)</div><div class="proj-scenario-items"><div class="proj-item"><span class="proj-item-label">TDC conv. → 6%+ (vs 3.63% MAY)</span><span class="proj-item-val">+844 ops/mes</span></div><div class="proj-item"><span class="proj-item-label">Cruce seguro ≥38% (mín 28.8%)</span><span class="proj-item-val">señal JUN 40.5%</span></div><div class="proj-item"><span class="proj-item-label">Facturación objetivo</span><span class="proj-item-val">~$280MM/mes</span></div></div></div>
     <div class="proj-scenario" style="border-color:rgba(245,166,35,.4)"><div class="proj-scenario-head" style="color:var(--gold)">🟡 Importante (60 días)</div><div class="proj-scenario-items"><div class="proj-item"><span class="proj-item-label">Eficiencia cargas ≥70% (ABR=71.2%)</span><span class="proj-item-val">+45K gest/mes</span></div><div class="proj-item"><span class="proj-item-label">Conv. general ≥3.5% (FEB/MAR=3.7%)</span><span class="proj-item-val">+280 ops Refin.</span></div><div class="proj-item"><span class="proj-item-label">Facturación objetivo</span><span class="proj-item-val">~$300MM/mes</span></div></div></div>
@@ -672,7 +680,64 @@ function _toggleCampKpi(type,key){
 
 function _setCampDay(val){_campDay=val;_renderCampDaily();}
 
-function _campKpiChart(canvasId,labels,values,lyVals,kpi){
+function _workDaysInMonth(yyyymm){
+  const year=parseInt(String(yyyymm).slice(0,4));
+  const month=parseInt(String(yyyymm).slice(4,6))-1;
+  const lastDay=new Date(year,month+1,0).getDate();
+  let total=0;
+  for(let day=1;day<=lastDay;day++){
+    const d=new Date(year,month,day);
+    const dw=d.getDay();
+    if(dw>=1&&dw<=5) total++;
+  }
+  return total;
+}
+
+function _campCurrentProjection(periods,agg,dayAgg,kpiKey){
+  if(!periods.length||!dayAgg||!Object.keys(dayAgg).length) return null;
+  const currentPeriod=String(periods[periods.length-1]);
+  const monthDates=Object.keys(dayAgg).filter(d=>d.startsWith(currentPeriod)&&_isWorkDay(d)).sort();
+  const elapsedDays=monthDates.length;
+  const totalDays=_workDaysInMonth(currentPeriod);
+  if(!elapsedDays||elapsedDays>=totalDays) return null;
+  const bases=monthDates.reduce((acc,d)=>{
+    const row=dayAgg[d]||{};
+    acc.g+=row.g||0;
+    acc.e+=row.e||0;
+    acc.c+=row.c||0;
+    acc.m+=row.m||0;
+    return acc;
+  },{g:0,e:0,c:0,m:0});
+  const projectedBases={
+    g:bases.g/elapsedDays*totalDays,
+    e:bases.e/elapsedDays*totalDays,
+    c:bases.c/elapsedDays*totalDays,
+    m:bases.m/elapsedDays*totalDays,
+  };
+  const actualByKpi={
+    g:bases.g,
+    e:bases.e,
+    c:bases.c,
+    m:bases.m,
+    tasa:bases.g>0?(bases.e/bases.g*100):0,
+    ticket:bases.c>0?(bases.m/bases.c):0,
+  };
+  const projectedByKpi={
+    g:projectedBases.g,
+    e:projectedBases.e,
+    c:projectedBases.c,
+    m:projectedBases.m,
+    tasa:projectedBases.g>0?(projectedBases.e/projectedBases.g*100):0,
+    ticket:projectedBases.c>0?(projectedBases.m/projectedBases.c):0,
+  };
+  return {
+    period:currentPeriod,
+    actual:actualByKpi[kpiKey]??null,
+    projected:projectedByKpi[kpiKey]??null,
+  };
+}
+
+function _campKpiChart(canvasId,labels,values,lyVals,kpi,currentProj=null){
   const prev=values.map((v,i)=>i>0?values[i-1]:null);
   const avg3=values.map((v,i)=>{
     if(i<2)return null;
@@ -680,12 +745,30 @@ function _campKpiChart(canvasId,labels,values,lyVals,kpi){
     return s.length?s.reduce((a,b)=>a+b,0)/s.length:null;
   });
   const f=kpi.fmt;
-  mkChart(canvasId,{type:'bar',data:{labels,datasets:[
+  const datasets=[
     {label:'Actual',data:values,backgroundColor:kpi.color+'99',borderRadius:4,order:4},
     {label:'Anterior',data:prev,type:'line',borderColor:'#f5a623',backgroundColor:'transparent',borderWidth:2,borderDash:[5,3],pointRadius:4,pointBackgroundColor:'#f5a623',order:1,spanGaps:false},
     {label:'Prom. 3M',data:avg3,type:'line',borderColor:'#00c4b4',backgroundColor:'transparent',borderWidth:2,pointRadius:4,pointBackgroundColor:'#00c4b4',order:2,spanGaps:false},
     {label:'Año ant.',data:lyVals,type:'line',borderColor:'rgba(232,56,42,.85)',backgroundColor:'transparent',borderWidth:2,borderDash:[3,3],pointRadius:4,pointBackgroundColor:'rgba(232,56,42,.85)',order:3,spanGaps:false},
-  ]},options:{plugins:{legend:{position:'top'},tooltip:{callbacks:{label:ctx=>ctx.raw===null?ctx.dataset.label+': N/D':ctx.dataset.label+': '+f(ctx.raw)}}},scales:{y:{grid:{color:'#1e2540'},ticks:{callback:v=>f(v)}},x:{grid:{display:false}}}}});
+  ];
+  if(currentProj){
+    const currentLabel=PER_LABELS[currentProj.period]||currentProj.period;
+    const projectedBars=labels.map(lb=>lb===currentLabel?currentProj.projected:null);
+    datasets.push({
+      label:'Proyección mes actual',
+      type:'bar',
+      data:projectedBars,
+      backgroundColor:'rgba(255,255,255,.18)',
+      borderColor:'rgba(255,255,255,.85)',
+      borderWidth:1.5,
+      borderRadius:4,
+      borderSkipped:false,
+      grouped:false,
+      order:0,
+      spanGaps:false,
+    });
+  }
+  mkChart(canvasId,{type:'bar',data:{labels,datasets},options:{plugins:{legend:{position:'top'},tooltip:{callbacks:{label:ctx=>ctx.raw===null?ctx.dataset.label+': N/D':ctx.dataset.label+': '+f(ctx.raw)}}},scales:{y:{grid:{color:'#1e2540'},ticks:{callback:v=>f(v)}},x:{grid:{display:false}}}}});
   return {prev,avg3};
 }
 
@@ -698,6 +781,7 @@ function _renderCampSideTable(targetId,labels,values,prev,avg3,lyVals,kpi){
 
 function _renderCampMonthly(){
   const agg=_campMonthAgg();
+  const dayAgg=_campDayAgg();
   const periods=Object.keys(agg).map(Number).sort();
   const labels=periods.map(p=>PER_LABELS[String(p)]||String(p));
   const container=document.getElementById('camp-charts-m');if(!container)return;
@@ -719,7 +803,8 @@ function _renderCampMonthly(){
     }
     const values=periods.map(p=>agg[p]?.[k.key]??null);
     const lyVals=periods.map(p=>agg[p-100]?.[k.key]??null);
-    const series=_campKpiChart('chart-camp-m-'+k.key,labels,values,lyVals,k);
+    const currentProj=_campCurrentProjection(periods,agg,dayAgg,k.key);
+    const series=_campKpiChart('chart-camp-m-'+k.key,labels,values,lyVals,k,currentProj);
     _renderCampSideTable('table-camp-m-'+k.key,labels,values,series.prev,series.avg3,lyVals,k);
   });
 }
@@ -727,7 +812,9 @@ function _renderCampMonthly(){
 function _renderCampDaily(){
   const agg=_campDayAgg();
   const container=document.getElementById('camp-charts-d');if(!container)return;
+  const infoEl=document.getElementById('camp-day-info');
   if(!Object.keys(agg).length){
+    if(infoEl)infoEl.textContent='';
     container.innerHTML='<div style="font-size:11px;color:var(--text3);padding:12px 0">Datos diarios no disponibles. Regenera el dashboard con el script Python.</div>';
     return;
   }
@@ -737,8 +824,15 @@ function _renderCampDaily(){
   const wdNum=parseInt(_campDay)||1;
   const dates=months.map(m=>wdMap[m+'_'+wdNum]).filter(Boolean);
   if(!dates.length){
+    if(infoEl)infoEl.textContent='';
     container.innerHTML='<div style="font-size:11px;color:var(--text3);padding:12px 0">Sin registros para día hábil '+wdNum+' en el período disponible.</div>';
     return;
+  }
+  if(infoEl){
+    const refDate=dates[dates.length-1];
+    const refJsDate=new Date(parseInt(refDate.slice(0,4)),parseInt(refDate.slice(4,6))-1,parseInt(refDate.slice(6,8)));
+    const dayNames=['Domingo','Lunes','Martes','Miércoles','Jueves','Viernes','Sábado'];
+    infoEl.textContent='Hoy: Día hábil '+wdNum+' - '+dayNames[refJsDate.getDay()]+' '+refDate.slice(6,8)+'-'+refDate.slice(4,6);
   }
   const MN=['ENE','FEB','MAR','ABR','MAY','JUN','JUL','AGO','SEP','OCT','NOV','DIC'];
   const labels=dates.map(d=>{const yr=d.slice(2,4),mm=parseInt(d.slice(4,6))-1,dd=d.slice(6,8);return dd+'/'+MN[mm]+'-'+yr;});
@@ -833,11 +927,11 @@ function renderBitacora(){
   const avgDaily = totalDias?(totalOps/totalDias).toFixed(0):0;
 
   document.getElementById('bita-kpis').innerHTML=`
-    <div class="bita-kpi" style="--kpi-color:var(--teal)"><div class="bita-kpi-label">Ops. Totales</div><div class="bita-kpi-val">${fmt(totalOps)}</div><div class="bita-kpi-sub">${fmt(bdata.length)} meses · ${fmt(totalDias)} días</div><div class="src-block">BITACORA_CLIENTE.xlsx</div></div>
-    <div class="bita-kpi" style="--kpi-color:var(--blue)"><div class="bita-kpi-label">Avance Externo</div><div class="bita-kpi-val">${fmt(av_o)}</div><div class="bita-kpi-sub">${fmtMM(av_m)} en monto</div><div class="src-block">BITACORA_CLIENTE.xlsx</div></div>
-    <div class="bita-kpi" style="--kpi-color:var(--gold)"><div class="bita-kpi-label">Pago Flexible</div><div class="bita-kpi-val">${fmt(pf_o)}</div><div class="bita-kpi-sub">${fmtMM(pf_m)} en monto</div><div class="src-block">BITACORA_CLIENTE.xlsx</div></div>
-    <div class="bita-kpi" style="--kpi-color:var(--accent)"><div class="bita-kpi-label">TDC (T+A+D)</div><div class="bita-kpi-val">${fmt(tc_t+tc_a+tc_d)}</div><div class="bita-kpi-sub">Tit: ${fmt(tc_t)} · Adi: ${fmt(tc_a)} · Dig: ${fmt(tc_d)}</div><div class="src-block">BITACORA_CLIENTE.xlsx</div></div>
-    <div class="bita-kpi" style="--kpi-color:${avgCruce>40?'var(--green)':'var(--accent2)'}"><div class="bita-kpi-label">Cruce Seguro Avg</div><div class="bita-kpi-val">${avgCruce.toFixed(1)}%</div><div class="bita-kpi-sub">${avgCruce<40?'⚠ Bajo benchmark 40%':'En rango'}</div><div class="src-block">BITACORA_CLIENTE.xlsx</div></div>`;
+    <div class="bita-kpi" style="--kpi-color:var(--teal)"><div class="bita-kpi-label">Ops. Totales</div><div class="bita-kpi-val">${fmt(totalOps)}</div><div class="bita-kpi-sub">${fmt(bdata.length)} meses · ${fmt(totalDias)} días</div><div class="src-block">BITACORA</div></div>
+    <div class="bita-kpi" style="--kpi-color:var(--blue)"><div class="bita-kpi-label">Avance Externo</div><div class="bita-kpi-val">${fmt(av_o)}</div><div class="bita-kpi-sub">${fmtMM(av_m)} en monto</div><div class="src-block">BITACORA</div></div>
+    <div class="bita-kpi" style="--kpi-color:var(--gold)"><div class="bita-kpi-label">Pago Flexible</div><div class="bita-kpi-val">${fmt(pf_o)}</div><div class="bita-kpi-sub">${fmtMM(pf_m)} en monto</div><div class="src-block">BITACORA</div></div>
+    <div class="bita-kpi" style="--kpi-color:var(--accent)"><div class="bita-kpi-label">TDC (T+A+D)</div><div class="bita-kpi-val">${fmt(tc_t+tc_a+tc_d)}</div><div class="bita-kpi-sub">Tit: ${fmt(tc_t)} · Adi: ${fmt(tc_a)} · Dig: ${fmt(tc_d)}</div><div class="src-block">BITACORA</div></div>
+    <div class="bita-kpi" style="--kpi-color:${avgCruce>40?'var(--green)':'var(--accent2)'}"><div class="bita-kpi-label">Cruce Seguro Avg</div><div class="bita-kpi-val">${avgCruce.toFixed(1)}%</div><div class="bita-kpi-sub">${avgCruce<40?'⚠ Bajo benchmark 40%':'En rango'}</div><div class="src-block">BITACORA</div></div>`;
 
   document.getElementById('bita-hl-right').innerHTML=`
     <div class="hl-stat"><div class="hl-stat-val">${fmt(totalOps)}</div><div class="hl-stat-label">Ops totales cliente</div></div>
@@ -1090,6 +1184,23 @@ function renderEjecutivos(){
   const fUser = activeEjUser;
   const fTipo = activeEjTipo;
 
+  let scopeRows = EJ_MONTHLY;
+  if(fPer!=='ALL') scopeRows = scopeRows.filter(d=>d.p===fPer);
+  if(fTipo!=='ALL') scopeRows = scopeRows.filter(d=>d.t===fTipo);
+
+  const byUser = {};
+  scopeRows.forEach(d=>{
+    if(!byUser[d.name]) byUser[d.name] = {name:d.name,g:0,e:0,c:0,m:0};
+    byUser[d.name].g += d.g;
+    byUser[d.name].e += d.e;
+    byUser[d.name].c += d.c;
+    byUser[d.name].m += d.m;
+  });
+  const rankMetric = fTipo==='TDC' ? 'c' : (scopeRows.some(d=>d.m>0) ? 'm' : 'c');
+  const rankedUsers = Object.values(byUser).sort((a,b)=>b[rankMetric]-a[rankMetric]||b.g-a.g||a.name.localeCompare(b.name));
+  const top10Users = new Set(rankedUsers.slice(0,10).map(d=>d.name));
+  const userOptions = rankedUsers.map(d=>d.name);
+
   // Build campaign tipo selector (only once)
   const tipoEl = document.getElementById('filter-ej-tipo');
   if(!tipoEl.querySelector('.filter-select')){
@@ -1105,33 +1216,31 @@ function renderEjecutivos(){
   }
   document.getElementById('ej-tipo-select').value=fTipo;
 
-  // Build user selector (only once)
   const userEl = document.getElementById('filter-ej-user');
-  if(!userEl.querySelector('.filter-select')){
+  if(userEl){
     userEl.innerHTML='<span class="filter-label">Ejecutivo:</span>';
     const sel = document.createElement('select');
     sel.className='filter-select';sel.style.minWidth='220px';sel.id='ej-user-select';
     const top10Opt = document.createElement('option');top10Opt.value='TOP10';top10Opt.textContent='Todos (Top 10 superpuesto)';sel.appendChild(top10Opt);
     const allOpt = document.createElement('option');allOpt.value='ALL';allOpt.textContent='Todos los ejecutivos';sel.appendChild(allOpt);
-    TOP10.forEach(e=>{
-      const opt=document.createElement('option');opt.value=e.name;opt.textContent=e.name.split(' ').slice(0,2).join(' ');sel.appendChild(opt);
+    userOptions.forEach(name=>{
+      const opt=document.createElement('option');opt.value=name;opt.textContent=name.split(' ').slice(0,2).join(' ');sel.appendChild(opt);
     });
     sel.onchange=()=>{activeEjUser=sel.value;renderEjecutivos()};
     userEl.appendChild(sel);
   }
-  document.getElementById('ej-user-select').value=fUser;
-
-  const top10Users = new Set(TOP10.map(d=>d.name));
-  const isTop10Mode = fUser==='TOP10';
-  const isAllMode = fUser==='ALL';
-  const isGroupedMode = isTop10Mode || isAllMode;
+  if(fUser!=='TOP10'&&fUser!=='ALL'&&!top10Users.has(fUser)&&!userOptions.includes(fUser)){
+    activeEjUser = userOptions.length ? 'TOP10' : 'ALL';
+  }
+  document.getElementById('ej-user-select').value=activeEjUser;
 
   // Filter data
-  let edata = isAllMode
-    ? EJ_MONTHLY
-    : (isTop10Mode ? EJ_MONTHLY.filter(d=>top10Users.has(d.name)) : EJ_MONTHLY.filter(d=>d.name===fUser));
-  if(fPer!=='ALL') edata = edata.filter(d=>d.p===fPer);
-  if(fTipo!=='ALL') edata = edata.filter(d=>d.t===fTipo);
+  const selectedUser = activeEjUser;
+  const selectedTop10Mode = selectedUser==='TOP10';
+  const selectedAllMode = selectedUser==='ALL';
+  let edata = selectedAllMode
+    ? scopeRows
+    : (selectedTop10Mode ? scopeRows.filter(d=>top10Users.has(d.name)) : scopeRows.filter(d=>d.name===selectedUser));
 
   // KPIs
   const tg=edata.reduce((a,d)=>a+d.g,0), te=edata.reduce((a,d)=>a+d.e,0);
@@ -1150,7 +1259,7 @@ function renderEjecutivos(){
   }
 
   document.getElementById('ej-kpis').innerHTML=`
-    <div class="bita-kpi" style="--kpi-color:var(--accent)"><div class="bita-kpi-label">Gestiones</div><div class="bita-kpi-val">${fmt(tg)}</div><div class="bita-kpi-sub">${isTop10Mode?'Top 10 ejecutivos':(isAllMode?'Todos los ejecutivos':fUser.split(' ').slice(0,2).join(' '))}</div></div>
+    <div class="bita-kpi" style="--kpi-color:var(--accent)"><div class="bita-kpi-label">Gestiones</div><div class="bita-kpi-val">${fmt(tg)}</div><div class="bita-kpi-sub">${selectedTop10Mode?'Top 10 ejecutivos':(selectedAllMode?'Todos los ejecutivos':selectedUser.split(' ').slice(0,2).join(' '))}</div></div>
     <div class="bita-kpi" style="--kpi-color:var(--blue)"><div class="bita-kpi-label">Contactabilidad</div><div class="bita-kpi-val">${tasa}%</div><div class="bita-kpi-sub">${fmt(te)} efectivos</div></div>
     <div class="bita-kpi" style="--kpi-color:var(--teal)"><div class="bita-kpi-label">Monto Comprometido</div><div class="bita-kpi-val">${tm>1e9?fmtB(tm):fmtMM(tm)}</div><div class="bita-kpi-sub">${fmt(tc)} compromisos</div></div>
     <div class="bita-kpi" style="--kpi-color:var(--gold)"><div class="bita-kpi-label">Conversión</div><div class="bita-kpi-val">${conv}%</div><div class="bita-kpi-sub">compromisos/efectivos</div></div>
@@ -1166,21 +1275,11 @@ function renderEjecutivos(){
   const pLabels = periods.map(p=>PER_LABELS[p]||p);
 
   // Helper: aggregate edata by name+period (since data is now split by tipo)
-  const ejAgg=(name,per)=>{const rows=edata.filter(d=>d.name===name&&d.p===per);return {g:rows.reduce((a,d)=>a+d.g,0),e:rows.reduce((a,d)=>a+d.e,0),c:rows.reduce((a,d)=>a+d.c,0),m:rows.reduce((a,d)=>a+d.m,0)};};
-  // Filtered base for charts (apply tipo filter to EJ_MONTHLY)
-  const ejBaseRaw = fTipo==='ALL' ? EJ_MONTHLY : EJ_MONTHLY.filter(d=>d.t===fTipo);
-  const ejBase = isAllMode
-    ? ejBaseRaw
-    : (isTop10Mode ? ejBaseRaw.filter(d=>top10Users.has(d.name)) : ejBaseRaw.filter(d=>d.name===fUser));
+  const ejBase = edata;
 
-  if(isTop10Mode){
+  if(selectedTop10Mode){
     // Show top 5 as lines for comparison — recalculate based on filtered data
-    let top5;
-    if(isTop10Mode && fTipo==='ALL'){ top5 = TOP10.slice(0,5); }
-    else {
-      const byUser={};ejBase.forEach(d=>{byUser[d.name]=(byUser[d.name]||0)+d.m;});
-      top5 = Object.entries(byUser).sort((a,b)=>b[1]-a[1]).slice(0,5).map(([name])=>({name}));
-    }
+    const top5 = rankedUsers.slice(0,5).map(d=>({name:d.name}));
     // Chart 1: Monto por mes — line per executive
     mkChart('chartEjMonto',{type:'line',data:{labels:pLabels,datasets:top5.map((ej,i)=>({
       label:ej.name.split(' ').slice(0,2).join(' '),
@@ -1211,7 +1310,7 @@ function renderEjecutivos(){
       data:periods.map(p=>{const rows=ejBase.filter(d=>d.name===ej.name&&d.p===p);return rows.reduce((a,d)=>a+d.c,0);}),
       backgroundColor:EJ_COLORS[i]+'99',borderRadius:3,
     }))},options:{plugins:{legend:{position:'top',labels:{font:{size:9}}}},scales:{y:{grid:{color:'#1e2540'}},x:{grid:{display:false}}}}});
-  } else if(isAllMode) {
+  } else if(selectedAllMode) {
     // All executives: show aggregated totals (not top-10 overlay)
     const allData = periods.map(p=>{
       const rows = ejBase.filter(d=>d.p===p);
@@ -1243,7 +1342,7 @@ function renderEjecutivos(){
     }]},options:{plugins:{legend:{display:false}},scales:{y:{grid:{color:'#1e2540'}},x:{grid:{display:false}}}}});
   } else {
     // Single executive: show bars with trend
-    const userData = periods.map(p=>{const rows=ejBase.filter(d=>d.name===fUser&&d.p===p);return {g:rows.reduce((a,d)=>a+d.g,0),e:rows.reduce((a,d)=>a+d.e,0),c:rows.reduce((a,d)=>a+d.c,0),m:rows.reduce((a,d)=>a+d.m,0)};});
+    const userData = periods.map(p=>{const rows=ejBase.filter(d=>d.name===selectedUser&&d.p===p);return {g:rows.reduce((a,d)=>a+d.g,0),e:rows.reduce((a,d)=>a+d.e,0),c:rows.reduce((a,d)=>a+d.c,0),m:rows.reduce((a,d)=>a+d.m,0)};});
 
     mkChart('chartEjMonto',{type:'bar',data:{labels:pLabels,datasets:[{
       label:'Monto MM$',data:userData.map(d=>Math.round(d.m/1e6)),
@@ -1299,6 +1398,71 @@ function renderEjecutivos(){
   });
   tbody.innerHTML=tableHtml;
 
+  // Quartile table: classify within each month using current filters
+  const quartileTbody=document.getElementById('ejQuartileTableBody');
+  const quartileRows = filteredTable.slice();
+  const normalize = (value, min, max) => {
+    if(max===min) return max>0 ? 1 : 0;
+    return (value-min)/(max-min);
+  };
+  const quartileByUserPeriod = {};
+  const quartilePeriods = [...new Set(quartileRows.map(d=>d.p))];
+  quartilePeriods.forEach(period=>{
+    const monthRows = quartileRows.filter(d=>d.p===period);
+    const compValues = monthRows.map(d=>d.c);
+    const amountValues = monthRows.map(d=>d.m);
+    const compMin = compValues.length ? Math.min(...compValues) : 0;
+    const compMax = compValues.length ? Math.max(...compValues) : 0;
+    const amountMin = amountValues.length ? Math.min(...amountValues) : 0;
+    const amountMax = amountValues.length ? Math.max(...amountValues) : 0;
+    const rankedMonthRows = monthRows.map(d=>{
+      const compScore = normalize(d.c, compMin, compMax);
+      const amountScore = normalize(d.m, amountMin, amountMax);
+      const qScore = fTipo==='TDC' ? compScore : ((compScore + amountScore) / 2);
+      return {...d, qScore};
+    }).sort((a,b)=>b.qScore-a.qScore||b.c-a.c||b.m-a.m||a.name.localeCompare(b.name));
+    rankedMonthRows.forEach((d,index)=>{
+      const quartile = Math.min(4, Math.floor(index*4/rankedMonthRows.length)+1);
+      quartileByUserPeriod[`${d.name}__${period}`] = {label:`Q${quartile}`, order:quartile, score:d.qScore};
+    });
+  });
+  quartileRows.sort((a,b)=>{
+    const qa = quartileByUserPeriod[`${a.name}__${a.p}`] || {order:4, score:0};
+    const qb = quartileByUserPeriod[`${b.name}__${b.p}`] || {order:4, score:0};
+    return b.p.localeCompare(a.p) || qa.order-qb.order || qb.score-qa.score || a.name.localeCompare(b.name) || b.m-a.m;
+  });
+  const quartileColors = {
+    Q1:'background:rgba(186,230,201,.55);color:#1f5130;font-weight:700;border-radius:6px;text-align:center;',
+    Q2:'background:rgba(253,230,138,.5);color:#6b4f00;font-weight:700;border-radius:6px;text-align:center;',
+    Q3:'background:rgba(254,215,170,.5);color:#7c3d12;font-weight:700;border-radius:6px;text-align:center;',
+    Q4:'background:rgba(254,202,202,.5);color:#7f1d1d;font-weight:700;border-radius:6px;text-align:center;'
+  };
+  let quartileTableHtml='';
+  quartileRows.slice(0,50).forEach(d=>{
+    const quartile = quartileByUserPeriod[`${d.name}__${d.p}`] || {label:'Q4'};
+    const quartileStyle = quartileColors[quartile.label] || quartileColors.Q4;
+    const tasa=d.g?(d.e/d.g*100).toFixed(1):'0';
+    const conv=d.e?(d.c/d.e*100).toFixed(2):'0';
+    const sem=+tasa>=81.9?'sem-green':+tasa>=75?'sem-yellow':'sem-red';
+    // Delta vs previous month (correct month arithmetic)
+    const yr=parseInt(d.p.slice(0,4)), mm=parseInt(d.p.slice(4,6));
+    const prevP = mm===1 ? String((yr-1)*100+12) : String(yr*100+(mm-1)).padStart(6,'0');
+    const prev = ejBase.find(x=>x.name===d.name&&x.p===prevP);
+    const delta = prev&&prev.m>0?((d.m-prev.m)/prev.m*100).toFixed(1):null;
+    const deltaHtml = delta!==null?`<span class="kpi-delta ${+delta>=0?'delta-up':'delta-down'}">${+delta>=0?'+':''}${delta}%</span>`:'';
+    quartileTableHtml+=`<tr>
+      <td>${d.name.split(' ').slice(0,2).join(' ')}</td>
+      <td style="${quartileStyle}">${quartile.label}</td>
+      <td>${PER_LABELS[d.p]||d.p}</td>
+      <td>${fmt(d.g)}</td>
+      <td>${fmt(d.e)}</td>
+      <td><span class="semaforo ${sem}"></span>${tasa}%</td>
+      <td>${fmt(d.c)}</td>
+      <td>${conv}%</td>
+      <td>${fmtMM(d.m)} ${deltaHtml}</td></tr>`;
+  });
+  quartileTbody.innerHTML=quartileTableHtml;
+
   // === HEADCOUNT & TIEMPOS ===
   if(typeof EJ_HC!=='undefined' && typeof EJ_TIEMPOS!=='undefined'){
     const hcPeriods = fPer==='ALL' ? PERIODOS_DH : [fPer];
@@ -1307,9 +1471,9 @@ function renderEjecutivos(){
     const hcMax = hcPeriods.map(p=>{const r=EJ_HC.find(h=>h.p===p);return r?r.max:0;});
 
     // Filter tiempos by user and period
-    const tBaseUser = isAllMode
+    const tBaseUser = selectedAllMode
       ? EJ_TIEMPOS
-      : (isTop10Mode ? EJ_TIEMPOS.filter(d=>top10Users.has(d.name)) : EJ_TIEMPOS.filter(d=>d.name===fUser));
+      : (selectedTop10Mode ? EJ_TIEMPOS.filter(d=>top10Users.has(d.name)) : EJ_TIEMPOS.filter(d=>d.name===selectedUser));
     let tData = tBaseUser;
     if(fPer!=='ALL') tData = tData.filter(d=>d.p===fPer);
 
@@ -1417,11 +1581,11 @@ function renderCorrelacion(){
   const deltaFact = tProv?((tFact-tProv)/tProv*100).toFixed(1):'—';
 
   document.getElementById('corr-kpis').innerHTML=`
-    <div class="bita-kpi" style="--kpi-color:var(--blue)"><div class="bita-kpi-label">Gestiones FASTCO</div><div class="bita-kpi-val">${fmt(tGest)}</div><div class="bita-kpi-sub">${fMonth==='ALL'?'Todos los meses':fMonth}</div><div class="src-block">DATA_HISTORIA_DETALLE.xlsx</div></div>
-    <div class="bita-kpi" style="--kpi-color:var(--teal)"><div class="bita-kpi-label">Ops. Cliente</div><div class="bita-kpi-val">${fmt(tOps)}</div><div class="bita-kpi-sub">Reportado por Scotiabank</div><div class="src-block">BITACORA_CLIENTE.xlsx</div></div>
-    <div class="bita-kpi" style="--kpi-color:var(--gold)"><div class="bita-kpi-label">Compromisos FASTCO</div><div class="bita-kpi-val">${fmt(tComp)}</div><div class="bita-kpi-sub">Ratio comp/ops: ${ratioCompOps}%</div><div class="src-block">DATA_HISTORIA_DETALLE.xlsx</div></div>
-    <div class="bita-kpi" style="--kpi-color:var(--green)"><div class="bita-kpi-label">Fact. Real</div><div class="bita-kpi-val">${fmtMM(tFact)}</div><div class="bita-kpi-sub">Acumulado filtrado</div><div class="src-block">FACTURACION_PROVISIONES.xlsx</div></div>
-    <div class="bita-kpi" style="--kpi-color:${+deltaFact>=0?'var(--green)':'var(--accent2)'}"><div class="bita-kpi-label">Δ Fact vs Prov</div><div class="bita-kpi-val">${deltaFact}%</div><div class="bita-kpi-sub">${fmtMM(tFact-tProv)}</div><div class="src-block">FACTURACION_PROVISIONES.xlsx</div></div>`;
+    <div class="bita-kpi" style="--kpi-color:var(--blue)"><div class="bita-kpi-label">Gestiones FASTCO</div><div class="bita-kpi-val">${fmt(tGest)}</div><div class="bita-kpi-sub">${fMonth==='ALL'?'Todos los meses':fMonth}</div><div class="src-block">DATA_HISTORIA_DETALLE</div></div>
+    <div class="bita-kpi" style="--kpi-color:var(--teal)"><div class="bita-kpi-label">Ops. Cliente</div><div class="bita-kpi-val">${fmt(tOps)}</div><div class="bita-kpi-sub">Reportado por Scotiabank</div><div class="src-block">BITACORA</div></div>
+    <div class="bita-kpi" style="--kpi-color:var(--gold)"><div class="bita-kpi-label">Compromisos FASTCO</div><div class="bita-kpi-val">${fmt(tComp)}</div><div class="bita-kpi-sub">Ratio comp/ops: ${ratioCompOps}%</div><div class="src-block">DATA_HISTORIA_DETALLE</div></div>
+    <div class="bita-kpi" style="--kpi-color:var(--green)"><div class="bita-kpi-label">Fact. Real</div><div class="bita-kpi-val">${fmtMM(tFact)}</div><div class="bita-kpi-sub">Acumulado filtrado</div><div class="src-block">FACTURACION_PROVISIONES</div></div>
+    <div class="bita-kpi" style="--kpi-color:${+deltaFact>=0?'var(--green)':'var(--accent2)'}"><div class="bita-kpi-label">Δ Fact vs Prov</div><div class="bita-kpi-val">${deltaFact}%</div><div class="bita-kpi-sub">${fmtMM(tFact-tProv)}</div><div class="src-block">FACTURACION_PROVISIONES</div></div>`;
 
   // Product filter buttons
   const prodEl = document.getElementById('filter-corr-prod');

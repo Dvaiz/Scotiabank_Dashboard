@@ -93,27 +93,29 @@ Salida esperada:
 
 ## 8) Pestañas del dashboard
 
-- Macro
 - Campanas
-- Mapa
+- Bitacora
 - Facturacion
 - Oportunidades
 - Ejecutivos
 - Correlacion
-- Diagnostico
+- Minto
 
 Notas funcionales recientes:
 - Campanas: en los comparativos "Gestion por Mes" y "Gestion por Dia" la seleccion de KPI es single-select.
 - Campanas: cada grafico comparativo incluye una tabla lateral con Actual, Anterior y Prom. 3M.
-- Mapa: nombres de campana/cartera mostrados desde origen SQL y etiquetados como `CARTERA | OT`.
+- Ejecutivos: el selector de TOP10 se recalcula segun periodo y campaña activos; para TDC el ranking usa cantidad de compromisos.
+- Ejecutivos: existe un bloque separado de "Cuartilizacion Mensual por Ejecutivo" que clasifica por mes con filtros activos; para TDC usa solo compromisos y para el resto combina compromisos y monto.
+- Minto: resumen ejecutivo narrativo embebido en el dashboard.
 
 ## 9) Logica funcional clave
 
 - Correlacion: cruza FASTCO, cliente y facturacion por producto/OT y mes.
-- Ejecutivos: ranking, headcount, tiempos (incluyendo conversion robusta de unidad para `TURNO`).
+- Ejecutivos: ranking dinamico por filtros, headcount, tiempos (incluyendo conversion robusta de unidad para `TURNO`) y cuartilizacion mensual por ejecutivo.
 - Facturacion: mezcla historico + proyeccion en base a UF y series de actividad.
 - Campanas: comparativos mensuales y diarios con filtros globales y tabla lateral de lectura rapida.
-- Mapa: visualizacion con etiquetas de campana alineadas al origen SQL (`CARTERA | OT`).
+- Bitacora: seguimiento mensual y diario sobre la fuente BITACORA.
+- Minto: capa de lectura ejecutiva resumida dentro del HTML final.
 
 ## 10) Diagrama de arquitectura
 
