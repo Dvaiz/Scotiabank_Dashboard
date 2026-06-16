@@ -241,22 +241,21 @@ def generate_diagram():
     tabs_y1 = 964
     draw.rounded_rectangle([X_COL3_START, tabs_y0, X_COL3_END, tabs_y1], radius=8, fill=CARD_BG, outline=CARD_BORDER, width=1)
     draw.rounded_rectangle([X_COL3_START + 5, tabs_y0 + 5, X_COL3_END - 5, tabs_y0 + 35], radius=4, fill=(30, 41, 59))
-    draw_centered_text(draw, "ESTRUCTURA DE PESTAÑAS (8 MÓDULOS DE UI)", (X_COL3_START + X_COL3_END)//2, tabs_y0 + 10, TEXT_WHITE, card_title_font)
-    
+    draw_centered_text(draw, "ESTRUCTURA DE PESTAÑAS (7 MÓDULOS DE UI)", (X_COL3_START + X_COL3_END)//2, tabs_y0 + 10, TEXT_WHITE, card_title_font)
+
     tab_pills = [
-        ("Macro", "Resumen ejecutivo con KPIs centrales y tendencia global.", BLUE_ACCENT),
-        ("Campanas", "Comparativos mes/dia con KPI unico y tabla lateral de valores.", BLUE_ACCENT),
-        ("Mapa", "Operacion cliente con campanas desde origen SQL (CARTERA | OT).", BLUE_ACCENT),
-        ("Facturacion", "Historico y proyeccion de ingresos por OT/producto.", ORANGE_ACCENT),
-        ("Oportunidades", "Palancas y escenarios de crecimiento financiero.", ORANGE_ACCENT),
-        ("Ejecutivos", "Ranking, HC, tiempos, TMO y ocupacion.", GREEN_ACCENT),
+        ("Campanas", "Comparativos mes/dia por campana con KPIs y tabla.", BLUE_ACCENT),
+        ("Ejecutivos", "Ranking, HC, tiempos (TMO) y calidad de gestion.", GREEN_ACCENT),
+        ("Mapa", "Facturacion: real vs provision y proyeccion.", ORANGE_ACCENT),
+        ("Bitacora Cliente", "Operaciones del cliente: volumenes, mix y seguros.", BLUE_ACCENT),
         ("Correlacion", "Cruce FASTCO vs cliente vs facturacion por OT.", TEAL_ACCENT),
-        ("Diagnostico", "Lectura ejecutiva de situacion, riesgos y resolucion.", RED_ACCENT)
+        ("Palancas de Mejora", "Alertas, What-if y proyeccion de Venta Real 6M.", ORANGE_ACCENT),
+        ("Arbol de Valor", "Diagnostico Situacion -> Complicacion -> Resolucion.", RED_ACCENT)
     ]
-    
-    tab_h = 48
-    tab_gap = 10
-    tab_start_y = 460
+
+    tab_h = 56
+    tab_gap = 12
+    tab_start_y = 462
     
     for t_idx, (lbl, t_desc, accent) in enumerate(tab_pills):
         ty0 = tab_start_y + t_idx * (tab_h + tab_gap)

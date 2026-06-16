@@ -93,20 +93,26 @@ Salida esperada:
 
 ## 8) Pestañas del dashboard
 
-- Campanas
-- Bitacora
-- Facturacion
-- Oportunidades
-- Ejecutivos
-- Correlacion
-- Minto
+El dashboard expone 7 pestañas (etiqueta visible -> vista interna):
+
+- Campanas (`campanas`)
+- Ejecutivos (`ejecutivos`)
+- Mapa (`facturacion`) - facturacion y crecimiento historico
+- Bitacora Cliente (`bitacora`)
+- Correlacion (`correlacion`)
+- Palancas de Mejora (`oportunidades`)
+- Arbol de Valor (`minto`)
 
 Notas funcionales recientes:
+- Filtro de periodo: en todas las pestañas (incluida Calidad dentro de Ejecutivos) los meses se ordenan de forma descendente, con el mes mas actual arriba y el mas antiguo abajo.
+- Filtro de campaña (Palancas de Mejora y Arbol de Valor): las opciones se muestran como "Todas las campañas / Avance / Refinanciamiento / TDC", sin el sufijo "(monto)/(unidades)".
+- Terminologia: el factor del embudo antes llamado "Materializacion" se muestra como "Venta real / Compromisos".
+- Encabezados de Palancas de Mejora y Arbol de Valor reescritos con una descripcion de proposito (que hace cada pestaña y como leerla).
 - Campanas: en los comparativos "Gestion por Mes" y "Gestion por Dia" la seleccion de KPI es single-select.
 - Campanas: cada grafico comparativo incluye una tabla lateral con Actual, Anterior y Prom. 3M.
 - Ejecutivos: el selector de TOP10 se recalcula segun periodo y campaña activos; para TDC el ranking usa cantidad de compromisos.
 - Ejecutivos: existe un bloque separado de "Cuartilizacion Mensual por Ejecutivo" que clasifica por mes con filtros activos; para TDC usa solo compromisos y para el resto combina compromisos y monto.
-- Minto: resumen ejecutivo narrativo embebido en el dashboard.
+- Arbol de Valor: diagnostico ejecutivo Situacion -> Complicacion -> Resolucion embebido, con descomposicion de palancas del embudo (waterfall).
 
 ## 9) Logica funcional clave
 
@@ -127,6 +133,8 @@ El diagrama se genera con:
 
 Archivo de salida:
 - `flujo_operacional_scotiabank.png`
+
+![Flujo operacional y arquitectura de datos](flujo_operacional_scotiabank.png)
 
 ## 11) Mantenimiento
 
