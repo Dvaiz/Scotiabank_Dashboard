@@ -1209,12 +1209,12 @@ def load_calidad():
     cal_prod['n'] = cal_prod['n'].round(4)
     cal_prod_list = cal_prod.to_dict('records')
 
-    # 3. Per-user per-period aggregate (for ranking)
+    # 3. Per-user per-period per-product aggregate (for ranking with campaign filter)
     cal_usr = (
-        df.groupby(['USUARIO_AGENTE', 'p'])['NOTA']
+        df.groupby(['USUARIO_AGENTE', 'p', 'prod_short'])['NOTA']
         .agg(n='mean', q='count')
         .reset_index()
-        .rename(columns={'USUARIO_AGENTE': 'u'})
+        .rename(columns={'USUARIO_AGENTE': 'u', 'prod_short': 'prod'})
     )
     cal_usr['n'] = cal_usr['n'].round(4)
     cal_usr_list = cal_usr.to_dict('records')

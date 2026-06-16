@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="es">
 <head>
 <meta charset="UTF-8">
@@ -176,8 +176,8 @@
     <button class="nav-tab" data-view="facturacion">🗺️ Mapa</button>
     <button class="nav-tab" data-view="bitacora">🏦 Bitácora Cliente</button>
     <button class="nav-tab" data-view="correlacion">🔗 Correlación</button>
-    <button class="nav-tab" data-view="oportunidades">🚀 Oportunidades</button>
-    <button class="nav-tab" data-view="minto">📋 Diagnóstico</button>
+    <button class="nav-tab" data-view="oportunidades">🚀 Palancas de Mejora</button>
+    <button class="nav-tab" data-view="minto">📋 Árbol de Valor</button>
   </div>
   <div class="period-badge">MAR 2025 – JUN 2026</div>
   <button class="theme-toggle" id="themeToggle">
@@ -190,12 +190,6 @@
 <!-- ============= VIEW: CAMPAÑAS ============= -->
 <div id="view-campanas" class="view active">
   <div class="filter-bar" id="filter-campanas"></div>
-  <div class="exec-headline" style="border-color:rgba(61,124,244,.25);background:linear-gradient(135deg,rgba(61,124,244,.12),rgba(0,196,180,.08))">
-    <div class="headline-left">
-      <h1>4 Tipos de Campaña — Refinanciamiento lidera; TDC, el activo desaprovechado</h1>
-      <p>Refinanciamiento: 77.5% del monto comprometido. Avance: mayor contactabilidad (93.2%). TDC: 246K gestiones sin monetización directa. <span class="src">DATA_HISTORIA_DETALLE</span></p>
-    </div>
-  </div>
   <div class="card" style="margin-bottom:14px"><div class="card-title">Desempeño por Tipo de Campaña <span class="src">DATA_HISTORIA_DETALLE</span></div><div class="card-subtitle">Cruce por tipo de venta y métricas de contactabilidad</div><table class="tipo-table"><thead><tr><th>Tipo</th><th>Gestiones</th><th>Efectivos</th><th>Contactab.</th><th>Compromisos</th><th>Conv.</th><th>Monto Total</th><th>Ticket</th><th>St</th></tr></thead><tbody id="tipoTableBody"></tbody></table></div>
   <div class="card" style="margin-top:14px">
     <div class="card-title">Comparativo Cargas por Mes <span class="src">CARGAS</span></div>
@@ -222,7 +216,7 @@
   </div>
   <!-- Comparativo diario KPI -->
   <div class="card" style="margin-top:14px">
-    <div class="card-title">Comparativo de Gestión por Día <span class="src">DATA_HISTORIA_DETALLE</span></div>
+    <div class="card-title">Comparativo de Gestión por Día, Acumulado mes <span class="src">DATA_HISTORIA_DETALLE</span></div>
     <div class="card-subtitle">Compara el día hábil seleccionado entre todos los períodos — selecciona día y un KPI</div>
     <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px">
       <span style="font-size:11px;color:var(--text3);font-weight:500">Día hábil:</span>
@@ -232,7 +226,6 @@
     <div id="camp-pills-d" style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:16px"></div>
     <div id="camp-charts-d" style="display:grid;grid-template-columns:1fr;gap:12px"></div>
   </div>
-  <div class="card" style="margin-top:14px"><div class="card-title">Tasa de Contactabilidad por Tipo <span class="src">DATA_HISTORIA_DETALLE</span></div><div class="card-subtitle">Benchmark: 80%</div><canvas id="chartContacto"></canvas></div>
 </div>
 
 <!-- ============= VIEW: BITÁCORA CLIENTE ============= -->
@@ -300,28 +293,37 @@
 
 <!-- ============= VIEW: OPORTUNIDADES ============= -->
 <div id="view-oportunidades" class="view">
-  <div class="filter-bar" id="filter-oportunidades"></div>
   <div class="exec-headline" style="border-color:rgba(0,196,180,.25);background:linear-gradient(135deg,rgba(0,196,180,.1),rgba(39,196,122,.06))">
     <div class="headline-left">
-      <h1>3 alertas activas: TDC cayó –42% · Seguro en mínimo · Cargas sub-ejecutadas</h1>
-      <p>Conv. TDC: 6.32% (ENE-26) → 3.63% (MAY-26). Cruce seguro: 28.8% (mín. período). Eficiencia cargas 2026: 56.5% promedio vs 78.9% en ENE-26. Tres vectores de recuperación con impacto inmediato. <span class="src">DATA_HISTORIA_DETALLE + CARGAS + BITACORA</span></p>
+        <h1 id="opp-alert-head">Cargando alertas…</h1>
+        <p>Detecta las palancas del embudo que se están deteriorando, cuantifica el impacto de cada una y proyecta cuánto puedes recuperar. Incluye <strong>alertas</strong> automáticas por campaña, un <strong>simulador What-if</strong> para mover contactabilidad, efectividad, venta real/compromisos o ticket, y una <strong>proyección de Venta Real</strong> a 6 meses con escenarios. En resumen: dónde estás perdiendo y cuánto recuperas si actúas. <span class="src">BITACORA + DATA_HISTORIA_DETALLE + CARGAS</span></p>
     </div>
   </div>
-  <div class="grid-3">
-    <div class="opp-card"><div class="opp-title">📉 OPP 1: Recuperar Conversión TDC <span class="src">DATA_HISTORIA_DETALLE</span></div><div class="opp-text">Conv. TDC: 6.32% (ENE-26) → 3.63% (MAY-26), –42% en 5 meses. 616K gestiones históricas con $0 monto. Con 35K efectivos/mes, volver a 6%:</div><div class="opp-value">+844 compromisos/mes</div></div>
-    <div class="opp-card"><div class="opp-title">📉 OPP 2: Cruce Seguro en Mínimo <span class="src">BITACORA</span></div><div class="opp-text">28.8% (MAY-26) vs 39.3% (DIC-25). Caída de 10.5pp en 5 meses. Señal de recuperación en JUN-26 (40.5% parcial). Recuperar a 40%:</div><div class="opp-value">+~50 ops seguro/mes</div></div>
-    <div class="opp-card"><div class="opp-title">📦 OPP 3: Eficiencia Cargas <span class="src">CARGAS</span></div><div class="opp-text">Prom. 2026: 56.5% vs peak 78.9% (ENE-26). MAR-26: 583K cargas, solo 35.7% gestionado. Con 334K cargas/mes promedio, subir a 70%:</div><div class="opp-value">+45K gestiones/mes</div></div>
-  </div>
+  <div class="filter-bar" id="filter-oportunidades"></div>
+    <div class="filter-bar"><span class="filter-label">Campaña:</span><select class="filter-select" id="opp-tipo"></select></div>
+    <div class="grid-3" id="opp-alerts"></div>
   <div class="grid-2">
-    <div class="card"><div class="card-title">Simulador de Escenarios <span class="src">DATA_HISTORIA_DETALLE</span></div><div class="card-subtitle">Mejora de conversión por tipo</div><canvas id="chartSimulator"></canvas></div>
-    <div class="card"><div class="card-title">Proyección Facturación 2026 <span class="src">FACTURACION_PROVISIONES</span></div><div class="card-subtitle">3 escenarios basados en ritmo YoY — ENE-ABR-26 acumula $1.106B (–12.2% vs 2025)</div><canvas id="chartProyeccion"></canvas></div>
+      <div class="card">
+        <div class="card-title">Simulador What-if <span class="src">Embudo: BITACORA + DATA_HISTORIA</span></div>
+        <div class="card-subtitle">Mueve las palancas de tasa y proyecta la venta real del mes</div>
+        <div style="display:flex;flex-direction:column;gap:8px;margin:10px 0">
+          <label style="display:flex;align-items:center;gap:8px;font-size:11px">Contactabilidad <input type="range" id="wf-cont" min="-20" max="20" value="0" step="1" oninput="renderWhatif()" style="flex:1"><span id="wf-cont-out" style="width:42px;text-align:right;color:var(--teal)">+0%</span></label>
+          <label style="display:flex;align-items:center;gap:8px;font-size:11px">Efectividad <input type="range" id="wf-conv" min="-20" max="20" value="0" step="1" oninput="renderWhatif()" style="flex:1"><span id="wf-conv-out" style="width:42px;text-align:right;color:var(--teal)">+0%</span></label>
+          <label style="display:flex;align-items:center;gap:8px;font-size:11px">Venta real / Compromisos <input type="range" id="wf-mat" min="-20" max="20" value="0" step="1" oninput="renderWhatif()" style="flex:1"><span id="wf-mat-out" style="width:42px;text-align:right;color:var(--gold)">+0%</span></label>
+          <label style="display:flex;align-items:center;gap:8px;font-size:11px">Ticket <input type="range" id="wf-tick" min="-20" max="20" value="0" step="1" oninput="renderWhatif()" style="flex:1"><span id="wf-tick-out" style="width:42px;text-align:right;color:var(--accent2)">+0%</span></label>
+        </div>
+        <div class="bita-kpi-grid" id="wf-output" style="grid-template-columns:repeat(3,1fr)"></div>
+        <canvas id="chartWhatif" style="max-height:150px"></canvas>
+      </div>
+      <div class="card">
+        <div class="card-title">Proyección Venta Real <span class="src">BITACORA</span></div>
+        <div class="card-subtitle">Histórico + forecast 6 meses con banda de confianza</div>
+        <canvas id="chartForecast"></canvas>
+        <div class="src-note" id="opp-estimacion" style="margin-top:8px"></div>
+      </div>
   </div>
-  <div class="src-note">Fuente: FACTURACION_PROVISIONES · Real 2025: $3.446B · Acumulado 2026 ENE-ABR: $1.106B</div>
-  <div class="grid-3">
-    <div class="proj-scenario"><div class="proj-scenario-head" style="color:var(--accent2)">🔴 Pesimista</div><div class="proj-scenario-items"><div class="proj-item"><span class="proj-item-label">Anual 2026</span><span class="proj-item-val">$2.92B</span></div><div class="proj-item"><span class="proj-item-label">vs 2025</span><span class="proj-item-val" style="color:var(--accent2)">–15.2%</span></div><div class="proj-item"><span class="proj-item-label">Supuesto</span><span class="proj-item-val" style="font-size:9px;color:var(--text3)">Ritmo ABR-26 sostenido</span></div></div></div>
-    <div class="proj-scenario" style="border-color:var(--gold)"><div class="proj-scenario-head" style="color:var(--gold)">🟡 Base</div><div class="proj-scenario-items"><div class="proj-item"><span class="proj-item-label">Anual 2026</span><span class="proj-item-val">$3.03B</span></div><div class="proj-item"><span class="proj-item-label">vs 2025</span><span class="proj-item-val" style="color:var(--gold)">–12.2%</span></div><div class="proj-item"><span class="proj-item-label">Supuesto</span><span class="proj-item-val" style="font-size:9px;color:var(--text3)">Prom. ENE-ABR mantenido</span></div></div></div>
-    <div class="proj-scenario" style="border-color:var(--green)"><div class="proj-scenario-head" style="color:var(--green)">🟢 Optimista</div><div class="proj-scenario-items"><div class="proj-item"><span class="proj-item-label">Anual 2026</span><span class="proj-item-val">$3.16B</span></div><div class="proj-item"><span class="proj-item-label">vs 2025</span><span class="proj-item-val" style="color:var(--gold)">–8.3%</span></div><div class="proj-item"><span class="proj-item-label">Supuesto</span><span class="proj-item-val" style="font-size:9px;color:var(--text3)">Aceleración Q3 tipo MAR-26</span></div></div></div>
-  </div>
+    <div class="src-note">Escenarios = acumulado de la proyección a 6 meses (banda inferior / base / banda superior)</div>
+    <div class="grid-3" id="opp-scenarios"></div>
 </div>
 
 <!-- ============= VIEW: EJECUTIVOS ============= -->
@@ -418,7 +420,7 @@
   <div class="card" id="card-cal-ranking">
     <div class="card-title"><span>Ranking Ejecutivos por Nota <span class="src">CALIDAD</span></span><span class="collapse-toggle" onclick="toggleCardCollapse('card-cal-ranking')" title="Expandir/Contraer">+</span></div>
     <div class="collapse-body">
-      <div class="card-subtitle">Top / bottom 20 ejecutivos por nota promedio — período y campaña seleccionados</div>
+      <div class="card-subtitle">Último promedio nota (con período) vs mes anterior por ejecutivo</div>
       <canvas id="chartCalRanking" style="max-height:380px"></canvas>
     </div>
   </div>
@@ -481,8 +483,21 @@
 <!-- ============= VIEW: DIAGNÓSTICO MINTO ============= -->
 <div id="view-minto" class="view">
   <div class="exec-headline" style="border-color:rgba(61,124,244,.25);background:linear-gradient(135deg,rgba(61,124,244,.1),rgba(0,196,180,.06))">
-    <div class="headline-left"><h1>Diagnóstico Ejecutivo · Situación → Complicación → Resolución</h1><p>FP&A Control de Gestión · MAY 2025–JUN 2026 · Basado en DATA_HISTORIA_DETALLE + BITACORA + CARGAS + FACTURACION_PROVISIONES</p></div>
+    <div class="headline-left"><h1>Diagnóstico Ejecutivo · Situación → Complicación → Resolución</h1><p>Explica el resultado comercial descomponiéndolo en sus palancas —cargas, cobertura, contactabilidad, efectividad, venta real/compromisos y ticket— y lo ordena con el método Minto: <strong>Situación</strong> (dónde estamos hoy), <strong>Complicación</strong> (qué está frenando la venta) y <strong>Resolución</strong> (acciones priorizadas, con responsable y meta). En resumen: qué cambió, por qué y qué hacer. <span class="src">FP&A Control de Gestión · MAY 2025–JUN 2026 · DATA_HISTORIA_DETALLE + BITACORA + CARGAS + FACTURACION_PROVISIONES</span></p></div>
   </div>
+  <div class="section-divider"><div class="section-divider-label">Análisis Diagnóstico · Árbol de Valor del Embudo</div><div class="section-divider-line"></div></div>
+  <div class="src-note">Venta Real = Cargas × Cobertura × Contactabilidad × Efectividad × Venta real / Compromisos × Ticket · Fuente: BITACORA + DATA_HISTORIA_DETALLE + CARGAS</div>
+  <div class="filter-bar" style="gap:18px">
+    <span class="filter-label">Campaña:</span><select class="filter-select" id="minto-tipo"></select>
+    <span class="filter-label">Comparar contra:</span><select class="filter-select" id="minto-mode"><option value="prev">Mes anterior</option><option value="avg3">Promedio 3 meses</option></select>
+  </div>
+  <div class="bita-kpi-grid" id="minto-palancas" style="grid-template-columns:repeat(6,1fr)"></div>
+  <div class="grid-2">
+    <div class="card"><div class="card-title">Waterfall · ¿Por qué cambió la Venta Real? <span class="src">Descomposición de palancas</span></div><div class="card-subtitle">Cada barra aísla el efecto de una palanca del embudo</div><canvas id="chartWaterfall"></canvas><div class="src-note" id="minto-wf-note" style="margin-top:8px"></div></div>
+    <div class="card"><div class="card-title">Reconciliación Compromiso → Venta Real <span class="src">DATA_HISTORIA vs BITACORA</span></div><div class="card-subtitle">La brecha entre lo prometido y lo confirmado por el cliente = Venta real / Compromisos</div><canvas id="chartRecon"></canvas></div>
+  </div>
+  <div class="card"><div class="card-title">Correlación Calidad ↔ Efectividad <span class="src">CALIDAD + DATA_HISTORIA</span></div><div class="card-subtitle">¿La nota de calidad explica la efectividad del ejecutivo?</div><canvas id="chartCorr" style="max-height:280px"></canvas><div class="src-note" id="minto-corr-note" style="margin-top:8px"></div></div>
+
   <div class="section-divider"><div class="section-divider-label">Situación</div><div class="section-divider-line"></div></div>
   <div class="src-note">Fuente: DATA_HISTORIA_DETALLE + BITACORA + FACTURACION_PROVISIONES</div>
   <div class="minto-box minto-sit"><div class="minto-icon">📊</div><div><div class="minto-head">Televentas FASTCO: 14 meses, 2.34M gestiones, 60.4K compromisos, $160.1B comprometidos</div><div class="minto-body">MAY-25 → JUN-26. Contactabilidad estable 82.4%. 152 ejecutivos distintos. Refinanciamiento lidera: 36.6% de gestiones y 74.9% del monto ($120.3B, ticket $4.4M). Avance: 93.5% contactabilidad (el más alto). TDC: 26.3% de gestiones, $0 monto CRM. Consumo: 10.7% gestiones, ticket más alto ($10.8M). Mejor mes: MAR-26 (208K gest, 6.316 compromisos, $17.5B).</div></div></div>
@@ -577,6 +592,83 @@ function mkChart(id,cfg){
   charts[id]=new Chart(c,cfg);return charts[id];
 }
 
+// ===================== ANALYTICS ENGINE (Diagnóstico · Predictivo · Prescriptivo) =====================
+// Identidad de embudo: VENTA REAL = Cargas × Cobertura × Contactab. × Efectividad × Venta real / Compromisos × Ticket
+const FNL_TIPOS=['AVANCE','REFINANCIAMIENTO','TDC'];
+const FNL_TLABEL={AVANCE:'Avance Externo',REFINANCIAMIENTO:'Pago Flexible',TDC:'Tarjetas TDC'};
+const FNL_FLABEL={AVANCE:'Avance',REFINANCIAMIENTO:'Refinanciamiento',TDC:'TDC'};
+const VR_MAP={
+  AVANCE:          {q:b=>+b.av_o||0, m:b=>+b.av_m||0, hasM:true},
+  REFINANCIAMIENTO:{q:b=>+b.pf_o||0, m:b=>+b.pf_m||0, hasM:true},
+  TDC:             {q:b=>(+b.tc_t||0)+(+b.tc_a||0)+(+b.tc_d||0), m:b=>0, hasM:false},
+};
+const _MN=['ENE','FEB','MAR','ABR','MAY','JUN','JUL','AGO','SEP','OCT','NOV','DIC'];
+function ymOf(p){const s=String(p);return s.length===6?s.slice(0,4)+'-'+s.slice(4,6):s;}
+function mLbl(ym){const a=String(ym).split('-');return _MN[(+a[1])-1]+'-'+a[0].slice(2);}
+function fmtCLP(v){return v>=1e9?fmtB(v):fmtMM(v);}
+
+let _FNL=null;
+function buildFunnel(){
+  if(_FNL)return _FNL;
+  const bitaByM={};BITA_MONTHLY.forEach(b=>bitaByM[b.m]=b);
+  const cargasByM={};CARGAS_RAW.forEach(c=>{const k=ymOf(c.p);cargasByM[k]=(cargasByM[k]||0)+(+c.reg||0);});
+  const dh={};DH_PIVOT.forEach(d=>{const ym=ymOf(d.p);(dh[ym]=dh[ym]||{})[d.t]={g:d.g,e:d.e,c:d.c,m:d.m};});
+  const months=BITA_MONTHLY.map(b=>b.m).sort();
+  const byTipo={};FNL_TIPOS.forEach(t=>byTipo[t]=[]);const total=[];
+  months.forEach(ym=>{
+    const b=bitaByM[ym];if(!b)return;
+    let tg=0,te=0,tcq=0,tcm=0,tvq=0,tvm=0;
+    FNL_TIPOS.forEach(t=>{
+      const d=(dh[ym]||{})[t]||{g:0,e:0,c:0,m:0};
+      const vq=VR_MAP[t].q(b),vm=VR_MAP[t].m(b);
+      byTipo[t].push({ym,g:d.g,e:d.e,cq:d.c,cm:d.m,vq,vm});
+      tg+=d.g;te+=d.e;tcq+=d.c;tcm+=d.m;tvq+=vq;tvm+=vm;
+    });
+    total.push({ym,cargas:cargasByM[ym]||0,g:tg,e:te,cq:tcq,cm:tcm,vq:tvq,vm:tvm});
+  });
+  _FNL={months,byTipo,total};return _FNL;
+}
+function fnlRows(scope){const F=buildFunnel();return scope==='ALL'?F.total:F.byTipo[scope];}
+function fnlHasM(scope){return scope==='ALL'?true:VR_MAP[scope].hasM;}
+function fnlMetric(scope){return fnlHasM(scope)?'vm':'vq';}
+function leversOf(row,scope){
+  const f=[];
+  if(scope==='ALL'){
+    f.push({k:'cargas',l:'Base (Cargas)',v:row.cargas,kind:'q'});
+    f.push({k:'cob',l:'Cobertura',v:row.cargas>0?row.g/row.cargas:0,kind:'pct'});
+  } else {
+    f.push({k:'g',l:'Volumen (Gest.)',v:row.g,kind:'q'});
+  }
+  f.push({k:'cont',l:'Contactab.',v:row.g>0?row.e/row.g:0,kind:'pct'});
+  f.push({k:'conv',l:'Efectividad',v:row.e>0?row.cq/row.e:0,kind:'pct'});
+  f.push({k:'mat',l:'Vta real/Comp.',v:row.cq>0?row.vq/row.cq:0,kind:'pct'});
+  if(fnlHasM(scope))f.push({k:'tick',l:'Ticket',v:row.vq>0?row.vm/row.vq:0,kind:'money'});
+  return f;
+}
+function decomp(f0,f1){
+  const n=f1.length,out=[];
+  for(let i=0;i<n;i++){
+    let pre=1;for(let j=0;j<i;j++)pre*=f1[j].v;
+    let post=1;for(let j=i+1;j<n;j++)post*=f0[j].v;
+    out.push(pre*(f1[i].v-f0[i].v)*post);
+  }
+  return out;
+}
+function avgLevers(rows,scope){const sets=rows.map(r=>leversOf(r,scope));const n=sets.length;return sets[0].map((f,i)=>({...f,v:sets.reduce((s,st)=>s+st[i].v,0)/n}));}
+function fmtLever(f){if(f.kind==='pct')return (f.v*100).toFixed(1)+'%';if(f.kind==='money')return f.v>=1e6?'$'+(f.v/1e6).toFixed(1)+'M':'$'+Math.round(f.v).toLocaleString('es-CL');return fmt(Math.round(f.v));}
+function linreg(ys){const n=ys.length;let sx=0,sy=0,sxy=0,sxx=0;ys.forEach((y,i)=>{sx+=i;sy+=y;sxy+=i*y;sxx+=i*i;});const den=(n*sxx-sx*sx)||1;const b=(n*sxy-sx*sy)/den;const a=(sy-b*sx)/n;return{a,b};}
+function forecastScope(scope,horizon){const rows=fnlRows(scope),key=fnlMetric(scope);const closed=rows.slice(0,-1);const hist=closed.map(r=>r[key]);const last6=hist.slice(-6);if(last6.length<2)return null;const{a,b}=linreg(last6);const mean3=last6.slice(-3).reduce((s,v)=>s+v,0)/Math.min(3,last6.length);const fit=last6.map((_,i)=>a+b*i),res=last6.map((v,i)=>v-fit[i]);const std=Math.sqrt(res.reduce((s,v)=>s+v*v,0)/res.length)||0;const out=[];for(let h=1;h<=horizon;h++){const trend=a+b*(last6.length-1+h);const base=Math.max(0,0.6*trend+0.4*mean3);out.push({base,lo:Math.max(0,base-1.5*std),hi:base+1.5*std});}return{closed,hist,out,key,std};}
+function pacingScope(scope){const rows=fnlRows(scope),key=fnlMetric(scope);const cur=rows[rows.length-1];const daysCur=(typeof BITA_DAILY!=='undefined')?BITA_DAILY.filter(d=>d.m===cur.ym).length:0;const closedB=BITA_MONTHLY.slice(0,-1);const avgDays=closedB.length?closedB.reduce((s,b)=>s+(+b.d||0),0)/closedB.length:20;const frac=avgDays>0?Math.min(1,daysCur/avgDays):0;const real=cur[key],proj=frac>0?Math.max(real/frac,real):real;return{curYm:cur.ym,real,proj,frac,daysCur,avgDays:Math.round(avgDays)};}
+function buildAlerts(){const F=buildFunnel(),out=[];FNL_TIPOS.forEach(t=>{const rows=F.byTipo[t];if(rows.length<4)return;const cur=rows[rows.length-2];const base=rows.slice(-5,-2);if(base.length<2)return;const rt=(r,n,d)=>r[d]>0?r[n]/r[d]:0;const avgRt=(n,d)=>base.reduce((s,r)=>s+rt(r,n,d),0)/base.length;const checks=[{m:'Contactabilidad',cur:rt(cur,'e','g'),bas:avgRt('e','g'),kind:'pp',thr:0.05,sev:'red',act:'Revisar horarios de discado y refrescar base telefónica'},{m:'Efectividad',cur:rt(cur,'cq','e'),bas:avgRt('cq','e'),kind:'rel',thr:0.15,sev:'red',act:'Auditar speech de cierre y reforzar coaching'},{m:'Venta real / Compromisos',cur:rt(cur,'vq','cq'),bas:avgRt('vq','cq'),kind:'pp',thr:0.08,sev:'amber',act:'Brecha compromiso→venta real: revisar validación/rechazo bancario'}];checks.forEach(c=>{const drop=c.kind==='rel'?(c.bas>0?(c.bas-c.cur)/c.bas:0):(c.bas-c.cur);if(drop>c.thr)out.push({sev:c.sev,tipo:t,metric:c.m,cur:c.cur,bas:c.bas,kind:c.kind,action:c.act+' en '+FNL_TLABEL[t],delta:c.bas-c.cur});});});const so={red:0,amber:1};return out.sort((a,b)=>so[a.sev]-so[b.sev]||Math.abs(b.delta)-Math.abs(a.delta));}
+function corrPoints(){if(typeof CAL_USR==='undefined'||!CAL_USR)return[];const nota={},cnt={};CAL_USR.forEach(r=>{nota[r.u]=(nota[r.u]||0)+r.n*r.q;cnt[r.u]=(cnt[r.u]||0)+r.q;});const ej={};EJ_MONTHLY.forEach(r=>{const e=ej[r.name]=ej[r.name]||{e:0,c:0};e.e+=r.e;e.c+=r.c;});const pts=[];Object.keys(ej).forEach(u=>{if((cnt[u]||0)>=3&&ej[u].e>200){const n=nota[u]/cnt[u]*100,conv=ej[u].c/ej[u].e*100;if(conv>0&&conv<40)pts.push({x:+n.toFixed(1),y:+conv.toFixed(2)});}});return pts;}
+function pearson(pts){const n=pts.length;if(n<3)return 0;let sx=0,sy=0,sxy=0,sxx=0,syy=0;pts.forEach(p=>{sx+=p.x;sy+=p.y;sxy+=p.x*p.y;sxx+=p.x*p.x;syy+=p.y*p.y;});const num=n*sxy-sx*sy,den=Math.sqrt((n*sxx-sx*sx)*(n*syy-sy*sy));return den?num/den:0;}
+let _mintoScope='ALL', _mintoMode='prev';
+function _mintoControls(){const rows=fnlRows('ALL');const closed=rows.slice(0,-1).map(r=>r.ym);const tEl=document.getElementById('minto-tipo');if(tEl&&!tEl.dataset.built){tEl.dataset.built='1';tEl.innerHTML='<option value="ALL">Todas las campañas</option>'+FNL_TIPOS.map(t=>`<option value="${t}">${FNL_FLABEL[t]}</option>`).join('');tEl.onchange=()=>{_mintoScope=tEl.value;renderMinto();};}const mEl=document.getElementById('minto-mode');if(mEl&&!mEl.dataset.built){mEl.dataset.built='1';mEl.onchange=()=>{_mintoMode=mEl.value;renderMinto();};}if(tEl)tEl.value=_mintoScope;if(mEl)mEl.value=_mintoMode;return closed;}
+function renderMinto(){const closed=_mintoControls();const scope=_mintoScope, rows=fnlRows(scope), hasM=fnlHasM(scope);const target=rows[rows.length-2]||rows[rows.length-1];const tIdx=rows.indexOf(target);const f1=leversOf(target,scope);let f0,baseLbl;if(_mintoMode==='avg3'){const prior=rows.slice(Math.max(0,tIdx-3),tIdx);f0=prior.length?avgLevers(prior,scope):leversOf(rows[tIdx-1]||target,scope);baseLbl='Prom-3M';}else{f0=leversOf(rows[tIdx-1]||target,scope);baseLbl=mLbl((rows[tIdx-1]||target).ym);}const contrib=decomp(f0,f1);const prod=a=>a.reduce((s,f)=>s*f.v,1);const v0=prod(f0),v1=prod(f1),dTot=v1-v0;const moneyMetric=hasM;const fmtV=v=>moneyMetric?fmtCLP(v):fmt(Math.round(v))+' u';document.getElementById('minto-palancas').innerHTML=f1.map((f,i)=>{const d=f.v-f0[i].v;const up=d>=0;const dTxt=f.kind==='pct'?(up?'+':'')+(d*100).toFixed(1)+'pp':(f.kind==='money'?(up?'+':'')+'$'+(d/1e6).toFixed(1)+'M':(up?'+':'')+fmt(Math.round(d)));const col=f.k==='mat'?'var(--gold)':(f.kind==='pct'?'var(--teal)':'var(--accent)');return `<div class="bita-kpi" style="--kpi-color:${col}"><div class="bita-kpi-label">${f.l}</div><div class="bita-kpi-val">${fmtLever(f)}</div><div class="bita-kpi-sub"><span class="kpi-delta ${up?'delta-up':'delta-down'}">${up?'↑':'↓'} ${dTxt}</span> vs ${baseLbl}</div></div>`;}).join('');const labels=['Inicio ('+baseLbl+')',...f1.map(f=>f.l),'Final ('+mLbl(target.ym)+')'];let acc=v0;const floats=[],bars=[];floats.push([0,v0]);bars.push(v0);contrib.forEach(c=>{const lo=Math.min(acc,acc+c),hi=Math.max(acc,acc+c);floats.push([lo,hi]);bars.push(c);acc+=c;});floats.push([0,v1]);bars.push(v1);const colors=labels.map((l,i)=>i===0||i===labels.length-1?'#3d7cf4cc':(bars[i]>=0?'#27c47acc':'#e8382acc'));mkChart('chartWaterfall',{type:'bar',data:{labels,datasets:[{data:floats,backgroundColor:colors,borderColor:colors.map(c=>c.slice(0,7)),borderWidth:1,borderRadius:3}]},options:{plugins:{legend:{display:false},tooltip:{callbacks:{label:ctx=>{const i=ctx.dataIndex;const v=bars[i];return (i===0||i===labels.length-1?'Total: ':'Efecto: '+(v>=0?'+':''))+fmtV(Math.abs(i===0||i===labels.length-1?floats[i][1]:v))+(i!==0&&i!==labels.length-1&&v<0?' (negativo)':'');}}}},scales:{y:{grid:{color:'rgba(255,255,255,.06)'},ticks:{callback:v=>moneyMetric?(v/1e6).toFixed(0)+'M':fmt(v)}},x:{grid:{display:false},ticks:{font:{size:9},maxRotation:35,minRotation:0}}}}});document.getElementById('minto-wf-note').innerHTML=`Δ Venta Real ${FNL_TLABEL[scope]||'(todas)'} = <b style="color:${dTot>=0?'var(--green)':'var(--accent2)'}">${dTot>=0?'+':''}${fmtV(dTot)}</b> · ${baseLbl} → ${mLbl(target.ym)}. Cada barra aísla cuánto aportó cada palanca del embudo.`;const rLab=rows.map(r=>mLbl(r.ym));mkChart('chartRecon',{type:'bar',data:{labels:rLab,datasets:[{label:'Compromisos (interno)',data:rows.map(r=>r.cq),backgroundColor:'rgba(61,124,244,.55)',borderColor:'#3d7cf4',borderWidth:1,borderRadius:3,order:2,yAxisID:'y'},{label:'Venta Real (cliente)',data:rows.map(r=>r.vq),backgroundColor:'rgba(0,196,180,.7)',borderColor:'#00c4b4',borderWidth:1,borderRadius:3,order:2,yAxisID:'y'},{type:'line',label:'Venta real / Compromisos %',data:rows.map(r=>r.cq>0?+(r.vq/r.cq*100).toFixed(1):null),borderColor:'#f5a623',backgroundColor:'transparent',tension:.3,pointRadius:3,borderWidth:2,order:1,yAxisID:'y1'}]},options:{plugins:{legend:{position:'top',labels:{font:{size:9}}},tooltip:{callbacks:{label:ctx=>ctx.dataset.yAxisID==='y1'?ctx.parsed.y+'% venta real/comp.':ctx.dataset.label+': '+fmt(ctx.parsed.y)+' u'}}},scales:{y:{grid:{color:'rgba(255,255,255,.06)'},title:{display:true,text:'Unidades',font:{size:9}}},y1:{position:'right',grid:{display:false},ticks:{callback:v=>v+'%'},title:{display:true,text:'Vta real/Comp.',font:{size:9}},min:0,max:100},x:{grid:{display:false}}}}});const pts=corrPoints();const r=pearson(pts);mkChart('chartCorr',{type:'scatter',data:{datasets:[{label:'Ejecutivos',data:pts,backgroundColor:'rgba(61,124,244,.55)',borderColor:'#3d7cf4',pointRadius:4}]},options:{plugins:{legend:{display:false},tooltip:{callbacks:{label:ctx=>`Nota ${ctx.parsed.x}% · Efect ${ctx.parsed.y}%`}}},scales:{x:{grid:{color:'rgba(255,255,255,.06)'},title:{display:true,text:'Nota Calidad %',font:{size:10}}},y:{grid:{color:'rgba(255,255,255,.06)'},title:{display:true,text:'Efectividad %',font:{size:10}}}}}});const rTxt=Math.abs(r)<0.15?'prácticamente nula':Math.abs(r)<0.35?'débil':Math.abs(r)<0.6?'moderada':'fuerte';document.getElementById('minto-corr-note').innerHTML=`Correlación de Pearson <b>r = ${r.toFixed(2)}</b> (${rTxt}, ${r>=0?'positiva':'negativa'}) entre Nota de Calidad y Efectividad por ejecutivo · ${pts.length} ejecutivos (efectivos>200, ≥3 evaluaciones). ${Math.abs(r)>=0.35?'La calidad explica parte de la efectividad: focalizar coaching.':'Efectividad no se explica solo por la nota: revisar base/oferta/timing.'}`;}
+let _oppScope='ALL';
+function _whatifBase(){const rows=fnlRows(_oppScope);const r=rows[rows.length-2]||rows[rows.length-1];return leversOf(r,_oppScope);}
+function renderWhatif(){const f=_whatifBase();const hasM=fnlHasM(_oppScope);const get=id=>{const el=document.getElementById(id);return el?(+el.value):0;};const dCont=get('wf-cont'),dConv=get('wf-conv'),dMat=get('wf-mat'),dTick=get('wf-tick');['cont','conv','mat','tick'].forEach(k=>{const o=document.getElementById('wf-'+k+'-out');if(o)o.textContent=(get('wf-'+k)>=0?'+':'')+get('wf-'+k)+'%';});const adj=f.map(x=>({...x}));const bump=(k,p)=>{const it=adj.find(x=>x.k===k);if(it)it.v=it.v*(1+p/100);};bump('cont',dCont);bump('conv',dConv);bump('mat',dMat);bump('tick',dTick);const prod=a=>a.reduce((s,x)=>s*x.v,1);const v0=prod(f),v1=prod(adj),d=v1-v0;const fmtV=v=>hasM?fmtCLP(v):fmt(Math.round(v))+' u';document.getElementById('wf-output').innerHTML=`<div class="bita-kpi" style="--kpi-color:var(--accent)"><div class="bita-kpi-label">Venta Real actual</div><div class="bita-kpi-val">${fmtV(v0)}</div><div class="bita-kpi-sub">último mes cerrado · ${FNL_TLABEL[_oppScope]||'Todas'}</div></div><div class="bita-kpi" style="--kpi-color:var(--green)"><div class="bita-kpi-label">Venta Real simulada</div><div class="bita-kpi-val">${fmtV(v1)}</div><div class="bita-kpi-sub"><span class="kpi-delta ${d>=0?'delta-up':'delta-down'}">${d>=0?'↑':'↓'} ${fmtV(Math.abs(d))}</span></div></div><div class="bita-kpi" style="--kpi-color:var(--gold)"><div class="bita-kpi-label">Variación</div><div class="bita-kpi-val">${v0>0?(d>=0?'+':'')+(d/v0*100).toFixed(1)+'%':'—'}</div><div class="bita-kpi-sub">vs línea base</div></div>`;mkChart('chartWhatif',{type:'bar',data:{labels:['Actual','Simulado'],datasets:[{data:[v0,v1],backgroundColor:['rgba(61,124,244,.6)','rgba(39,196,122,.7)'],borderColor:['#3d7cf4','#27c47a'],borderWidth:1,borderRadius:4}]},options:{plugins:{legend:{display:false},tooltip:{callbacks:{label:ctx=>fmtV(ctx.parsed.y)}}},scales:{y:{grid:{color:'rgba(255,255,255,.06)'},ticks:{callback:v=>hasM?(v/1e6).toFixed(0)+'M':fmt(v)}},x:{grid:{display:false}}}}});}
+
 // ===================== FILTER SYSTEM =====================
 let activeFilters = {
   campanas:'ALL',bitacora:'ALL',facturacion:'ALL',oportunidades:'ALL',ejecutivos:'ALL',correlacion:'ALL'
@@ -588,7 +680,9 @@ function buildFilter(containerId, view, options, labels) {
   const sel=document.createElement('select');
   sel.className='filter-select';
   const allOpt=document.createElement('option');allOpt.value='ALL';allOpt.textContent='Todos los períodos';sel.appendChild(allOpt);
-  options.forEach((o,i)=>{
+  // Orden descendente: mes más actual arriba, más antiguo abajo
+  const ordered=[...options].sort((a,b)=>(+String(b).replace('-',''))-(+String(a).replace('-','')));
+  ordered.forEach((o,i)=>{
     const opt=document.createElement('option');opt.value=o;
     // Format as yyyymm: if "2025-03" → "202503", if "202601" keep as is
     opt.textContent=String(o).includes('-')?String(o).replace('-',''):String(o);
@@ -881,7 +975,6 @@ function renderCampanas(){
     tbody.innerHTML+=`<tr><td><span class="tipo-badge"><span class="tipo-dot" style="background:${TIPO_COLORS[d.tipo]}"></span>${d.tipo}</span></td><td>${fmt(d.g)}</td><td>${fmt(d.e)}</td><td><span class="semaforo ${sem}"></span>${d.tasa}%</td><td>${fmt(d.c)}</td><td>${d.conv}%</td><td>${montoCell}</td><td>${ticketCell}</td><td><span class="semaforo ${sem}"></span></td></tr>`;
   });
 
-  mkChart('chartContacto',{type:'bar',data:{labels:tipoAgg.map(d=>d.tipo),datasets:[{label:'%',data:tipoAgg.map(d=>+d.tasa),backgroundColor:tipoAgg.map(d=>d.tasa>=80?'rgba(39,196,122,.7)':'rgba(232,56,42,.7)'),borderRadius:6}]},options:{indexAxis:'y',plugins:{legend:{display:false}},scales:{x:{min:60,max:100,grid:{color:'#1e2540'}},y:{grid:{display:false}}}}});
 
   // Cargas comparison chart (always full series, independent of period filter)
   const cargasSorted=[...CARGAS_RAW].sort((a,b)=>a.p-b.p);
@@ -1170,10 +1263,7 @@ function renderFacYearCharts(){
   }
 }
 
-function renderOppCharts(){
-  mkChart('chartSimulator',{type:'radar',data:{labels:['Contacto','Conv.','Ticket','Volumen','Monto'],datasets:[{label:'Actual',data:[82,3.2,45,100,100],borderColor:'rgba(61,124,244,.8)',backgroundColor:'rgba(61,124,244,.1)',pointRadius:3},{label:'Optimista',data:[90,5.5,60,115,145],borderColor:'rgba(39,196,122,.8)',backgroundColor:'rgba(39,196,122,.1)',pointRadius:3}]},options:{plugins:{legend:{position:'top'}},scales:{r:{grid:{color:'#1e2540'},ticks:{display:false}}}}});
-  mkChart('chartProyeccion',{type:'line',data:{labels:['ENE','FEB','MAR','ABR','MAY','JUN','JUL','AGO','SEP','OCT','NOV','DIC'],datasets:[{label:'Pesimista',data:[273.7,242.3,356.9,226,240,245,250,248,245,250,255,258],borderColor:'#e8382a',borderDash:[4,4],tension:.3,pointRadius:2},{label:'Base',data:[273.7,242.3,356.9,226,275,280,278,280,275,278,282,285],borderColor:'#f5a623',tension:.3,pointRadius:2},{label:'Optimista',data:[273.7,242.3,356.9,226,310,315,318,320,315,318,322,328],borderColor:'#27c47a',backgroundColor:'rgba(39,196,122,.08)',fill:true,tension:.3,pointRadius:2}]},options:{plugins:{legend:{position:'top'}},scales:{y:{grid:{color:'#1e2540'},ticks:{callback:v=>'MM$'+v}},x:{grid:{display:false}}}}});
-}
+function renderOppCharts(){const tEl=document.getElementById('opp-tipo');if(tEl&&!tEl.dataset.built){tEl.dataset.built='1';tEl.innerHTML='<option value="ALL">Todas las campañas</option>'+FNL_TIPOS.map(t=>`<option value="${t}">${FNL_FLABEL[t]}</option>`).join('');tEl.onchange=()=>{_oppScope=tEl.value;renderOppCharts();};}if(tEl)tEl.value=_oppScope;const scope=_oppScope, hasM=fnlHasM(scope);const fmtV=v=>hasM?fmtCLP(v):fmt(Math.round(v))+' u';const alerts=buildAlerts();const aHead=document.getElementById('opp-alert-head');const reds=alerts.filter(a=>a.sev==='red').length;aHead.innerHTML=alerts.length?`${alerts.length} alerta(s) detectada(s)${reds?` · ${reds} crítica(s)`:''} — revisa estas palancas para recuperar resultado`:'Sin alertas relevantes: las palancas están estables frente a su promedio reciente';document.getElementById('opp-alerts').innerHTML=alerts.length?alerts.slice(0,4).map(a=>{const dTxt=a.kind==='rel'?(a.delta/a.bas*100).toFixed(0)+'% rel':(a.delta*100).toFixed(1)+'pp';const col=a.sev==='red'?'var(--accent2)':'var(--gold)';return `<div class="opp-card" style="border-left:3px solid ${col}"><div class="opp-title">${a.sev==='red'?'🔴':'🟡'} ${a.metric} · ${FNL_TLABEL[a.tipo]}</div><div class="opp-text">${a.metric} cayó <b>${dTxt}</b> vs Prom-3M (${(a.cur*100).toFixed(1)}% vs ${(a.bas*100).toFixed(1)}%). ${a.action}.</div></div>`;}).join(''):'<div class="opp-card"><div class="opp-text">✅ Ninguna palanca muestra deterioro relevante respecto a su promedio de 3 meses.</div></div>';renderWhatif();const fc=forecastScope(scope,6);const pc=pacingScope(scope);if(fc){const histLbl=fc.closed.map(r=>mLbl(r.ym));const lastClosedYm=fc.closed[fc.closed.length-1].ym;const futLbl=[];let cy=+lastClosedYm.slice(0,4),cm=+lastClosedYm.slice(5,7);for(let h=0;h<6;h++){cm++;if(cm>12){cm=1;cy++;}futLbl.push(_MN[cm-1]+'-'+String(cy).slice(2));}const N=histLbl.length;const labels=[...histLbl,...futLbl];mkChart('chartForecast',{type:'line',data:{labels,datasets:[{label:'Venta Real (histórico)',data:[...fc.hist,...Array(6).fill(null)],borderColor:'#3d7cf4',backgroundColor:'transparent',tension:.3,pointRadius:3,borderWidth:2},{label:'Proyección',data:[...fc.hist.map((v,i)=>i===N-1?v:null),...fc.out.map(o=>o.base)],borderColor:'#f5a623',borderDash:[5,4],tension:.3,pointRadius:3,borderWidth:2},{label:'Banda sup.',data:[...Array(N).fill(null),...fc.out.map(o=>o.hi)],borderColor:'transparent',backgroundColor:'rgba(39,196,122,.10)',pointRadius:0,fill:'+1',tension:.3},{label:'Banda inf.',data:[...Array(N).fill(null),...fc.out.map(o=>o.lo)],borderColor:'transparent',backgroundColor:'transparent',pointRadius:0,tension:.3}]},options:{plugins:{legend:{position:'top',labels:{font:{size:9},filter:i=>!i.text.startsWith('Banda')}},tooltip:{callbacks:{label:ctx=>ctx.dataset.label+': '+fmtV(ctx.parsed.y)}}},scales:{y:{grid:{color:'rgba(255,255,255,.06)'},ticks:{callback:v=>hasM?(v/1e6).toFixed(0)+'M':fmt(v)}},x:{grid:{display:false},ticks:{font:{size:9}}}}}});const toGo=pc.proj-pc.real;document.getElementById('opp-estimacion').innerHTML=`<b>Estimación de Cierre ${mLbl(pc.curYm)} (en curso):</b> llevas <b>${fmtV(pc.real)}</b> con ${pc.daysCur} de ~${pc.avgDays} días (${(pc.frac*100).toFixed(0)}% del mes). A este ritmo el cliente confirmaría <b style="color:var(--gold)">${fmtV(pc.proj)}</b> al cierre${toGo>0?` (faltan ${fmtV(toGo)})`:''}.`;const sum=k=>fc.out.reduce((s,o)=>s+o[k],0);const sc=[['🔴 Pesimista','var(--accent2)',sum('lo')],['🟡 Base','var(--gold)',sum('base')],['🟢 Optimista','var(--green)',sum('hi')]];document.getElementById('opp-scenarios').innerHTML=sc.map(([t,c,v])=>`<div class="proj-scenario" style="border-color:${c}"><div class="proj-scenario-head" style="color:${c}">${t}</div><div class="proj-scenario-items"><div class="proj-item"><span class="proj-item-label">Próx. 6 meses</span><span class="proj-item-val">${fmtV(v)}</span></div><div class="proj-item"><span class="proj-item-label">Prom. mensual</span><span class="proj-item-val">${fmtV(v/6)}</span></div></div></div>`).join('');}}
 
 let activeEjUser = 'TOP10';
 let activeEjTipo = 'ALL';
@@ -1793,34 +1883,43 @@ function renderCorrelacion(){
 
 // ===================== CALIDAD =====================
 let _calPer = 'ALL';
-let _calProds = new Set(['ALL']); // multi-select: 'ALL' means todas
+let _calProdGroup = 'ALL';
+const CAL_PROD_GROUPS = [
+  { key:'TDC', color:'#3d7cf4', members:['TDC_ADICIONAL','TDC_TITULAR_SIN','TDC_TITULAR_WEB'] },
+  { key:'AVANCE', color:'#00c4b4', members:['TLMK_AVANCE','TMLK_AVANCE','TLMK_AVANCE_INACTIVO','TLMK_AVANCE_INTEN_WEB'] },
+  { key:'REFINANCIAMIENTO', color:'#f5a623', members:['TLMK_REFINAN_CON_ACR','TLMK_REFINAN_CON_ACR_F2','TLMK_REFINAN_CON_ACR_F3','TLMK_REFINAN_CON_ACR_F4'] }
+];
 
-function _calProdActive(prod){ return _calProds.has('ALL') || _calProds.has(prod); }
+function _calProdGroupMembers(groupKey){
+  const g = CAL_PROD_GROUPS.find(x=>x.key===groupKey);
+  if(!g || typeof CAL_PRODUCTOS==='undefined') return [];
+  return g.members.filter(m=>CAL_PRODUCTOS.includes(m));
+}
 
-function _buildCalProdPills(){
+function _calProdActive(prod){
+  if(_calProdGroup==='ALL') return true;
+  const g = CAL_PROD_GROUPS.find(x=>x.key===_calProdGroup);
+  return !!(g && g.members.includes(prod));
+}
+
+function _buildCalProdSelect(){
   if(typeof CAL_PRODUCTOS === 'undefined') return;
   const extEl = document.getElementById('filter-cal-extra');
   if(!extEl) return;
-  const allActive = _calProds.has('ALL');
-  extEl.innerHTML = '<span class="filter-label" style="flex-shrink:0">Campaña:</span>'
-    + `<span class="kpi-pill${allActive?' active':''}" style="--kc:#aaa" onclick="_toggleCalProd('ALL')"><span class="kpi-dot" style="background:#aaa"></span>Todas</span>`
-    + CAL_PRODUCTOS.map((p,i)=>{
-        const cols=['#3d7cf4','#00c4b4','#f5a623','#e8382a','#a855f7','#ec4899','#14b8a6','#f97316','#84cc16','#06b6d4'];
-        const c = cols[i%cols.length];
-        const active = !allActive && _calProds.has(p);
-        return `<span class="kpi-pill${active?' active':''}" style="--kc:${c}" onclick="_toggleCalProd('${p}')"><span class="kpi-dot" style="background:${c}"></span>${p}</span>`;
-      }).join('');
-}
-
-function _toggleCalProd(val){
-  if(val==='ALL'){ _calProds=new Set(['ALL']); }
-  else {
-    _calProds.delete('ALL');
-    if(_calProds.has(val)){ if(_calProds.size>1) _calProds.delete(val); else _calProds=new Set(['ALL']); }
-    else _calProds.add(val);
-  }
-  _buildCalProdPills();
-  renderCalidad();
+  if(extEl.querySelector('.filter-select')) return;
+  extEl.innerHTML = '<span class="filter-label">Campaña:</span>';
+  const sel = document.createElement('select');
+  sel.className='filter-select';
+  sel.id='cal-prod-sel';
+  const allOpt = document.createElement('option'); allOpt.value='ALL'; allOpt.textContent='Todas'; sel.appendChild(allOpt);
+  CAL_PROD_GROUPS.filter(g=>_calProdGroupMembers(g.key).length>0).forEach(g=>{
+    const o = document.createElement('option');
+    o.value = g.key;
+    o.textContent = g.key;
+    sel.appendChild(o);
+  });
+  sel.onchange = e => { _calProdGroup = e.target.value; renderCalidad(); };
+  extEl.appendChild(sel);
 }
 
 function _initCalFiltros(){
@@ -1829,7 +1928,7 @@ function _initCalFiltros(){
   // Período filter
   const perEl = document.getElementById('filter-cal-periodo');
   if(perEl && !perEl.querySelector('.filter-select')){
-    const periods = [...new Set(CAL_CICLO.map(d=>d.p))].sort();
+    const periods = [...new Set(CAL_CICLO.map(d=>d.p))].sort((a,b)=>(+String(b).replace('-',''))-(+String(a).replace('-','')));
     perEl.innerHTML = '<span class="filter-label">Período:</span>';
     const sel = document.createElement('select'); sel.className='filter-select'; sel.id='cal-per-sel';
     const ao = document.createElement('option'); ao.value='ALL'; ao.textContent='Todos los períodos'; sel.appendChild(ao);
@@ -1838,15 +1937,16 @@ function _initCalFiltros(){
     perEl.appendChild(sel);
   }
 
-  // Campañas multi-select pills (build once if empty)
+  // Campaña grouped dropdown (build once)
   const extEl = document.getElementById('filter-cal-extra');
-  if(extEl && !extEl.children.length) _buildCalProdPills();
+  if(extEl) _buildCalProdSelect();
 }
 
 function renderCalidad(){
   if(typeof CAL_CICLO === 'undefined') return;
   _initCalFiltros();
   if(document.getElementById('cal-per-sel')) document.getElementById('cal-per-sel').value=_calPer;
+  if(document.getElementById('cal-prod-sel')) document.getElementById('cal-prod-sel').value=_calProdGroup;
 
   const periods = [...new Set(CAL_CICLO.map(d=>d.p))].sort();
   const labels = periods.map(p=>PER_LABELS[p]||p);
@@ -1890,21 +1990,74 @@ function renderCalidad(){
     y:{ticks:{color:'var(--text3)',font:{size:10},callback:v=>v+'%'},grid:{color:'rgba(255,255,255,.06)'},min:80,max:100}
   }}});
 
-  // — Chart 3: Ranking ejecutivos (horizontal bar) —
-  const usrFilt = CAL_USR.filter(d=>(_calPer==='ALL'||d.p===_calPer));
-  const usrAgg = {};
-  usrFilt.forEach(d=>{ if(!usrAgg[d.u]){usrAgg[d.u]={s:0,q:0};} usrAgg[d.u].s+=d.n*d.q; usrAgg[d.u].q+=d.q; });
-  const usrArr = Object.entries(usrAgg)
-    .map(([u,v])=>({u,n:+(v.s/v.q*100).toFixed(2),q:v.q}))
-    .filter(d=>d.q>=3)
-    .sort((a,b)=>b.n-a.n);
-  const top20 = usrArr.slice(0,20);
-  const barColors = top20.map(d=>d.n>=95?'#27c47a99':d.n>=90?'#3d7cf499':'#f5a62399');
-  const barBorder = top20.map(d=>d.n>=95?'#27c47a':d.n>=90?'#3d7cf4':'#f5a623');
+  // — Chart 3: Ranking ejecutivos (horizontal bar) — último período vs anterior —
+  const usrBase = CAL_USR.filter(d=>_calProdGroup==='ALL' || (d.prod && _calProdActive(d.prod)));
+  const calUsrPeriods = [...new Set(usrBase.map(d=>d.p))].sort();
+  let pAct = null;
+  let pAnt = null;
+  if(_calPer!=='ALL' && calUsrPeriods.includes(_calPer)){
+    pAct = _calPer;
+    const prevPeriods = calUsrPeriods.filter(p=>p<pAct);
+    pAnt = prevPeriods.length ? prevPeriods[prevPeriods.length-1] : null;
+  }else{
+    pAct = calUsrPeriods[calUsrPeriods.length-1] || null;
+    pAnt = calUsrPeriods[calUsrPeriods.length-2] || null;
+  }
+  const pActLbl = pAct ? (PER_LABELS[pAct]||pAct) : 'N/D';
+  const pAntLbl = pAnt ? (PER_LABELS[pAnt]||pAnt) : 'N/D';
+
+  const usrByPer = {};
+  usrBase.forEach(d=>{
+    if(d.p!==pAct && d.p!==pAnt) return;
+    if(!usrByPer[d.u]) usrByPer[d.u] = {};
+    if(!usrByPer[d.u][d.p]) usrByPer[d.u][d.p] = {s:0,q:0};
+    usrByPer[d.u][d.p].s += d.n * d.q;
+    usrByPer[d.u][d.p].q += d.q;
+  });
+
+  const usrComp = Object.entries(usrByPer)
+    .map(([u,m])=>{
+      const act = m[pAct];
+      const ant = pAnt ? m[pAnt] : null;
+      if(!act || act.q < 3) return null;
+      const nAct = +(act.s/act.q*100).toFixed(2);
+      const nAnt = ant ? +(ant.s/ant.q*100).toFixed(2) : null;
+      return {
+        u,
+        nAct,
+        qAct:act.q,
+        nAnt,
+        qAnt:ant ? ant.q : 0,
+        deltaAbs: nAnt==null ? -1 : Math.abs(+(nAct-nAnt).toFixed(2))
+      };
+    })
+    .filter(Boolean)
+    .sort((a,b)=>b.deltaAbs-a.deltaAbs);
+
+  const top10 = usrComp.slice(0,10);
   mkChart('chartCalRanking',{type:'bar',data:{
-    labels:top20.map(d=>d.u),
-    datasets:[{label:'Nota %',data:top20.map(d=>d.n),backgroundColor:barColors,borderColor:barBorder,borderWidth:1.5,borderRadius:3}]
-  },options:{indexAxis:'y',responsive:true,plugins:{legend:{display:false},tooltip:{callbacks:{label:ctx=>`${ctx.parsed.x}% (${top20[ctx.dataIndex].q} gest.)`}}},scales:{
+    labels:top10.map(d=>d.u),
+    datasets:[
+      {label:`Último promedio (${pActLbl})`,data:top10.map(d=>d.nAct),backgroundColor:'#3d7cf4aa',borderColor:'#3d7cf4',borderWidth:1.5,borderRadius:3},
+      {label:`Mes anterior (${pAntLbl})`,data:top10.map(d=>d.nAnt),backgroundColor:'#8b9bb4aa',borderColor:'#8b9bb4',borderWidth:1.2,borderRadius:3}
+    ]
+  },options:{indexAxis:'y',responsive:true,plugins:{
+    legend:{display:true,labels:{color:'var(--text)',font:{size:10}}},
+    tooltip:{callbacks:{
+      label:ctx=>{
+        const d = top10[ctx.dataIndex];
+        if(ctx.datasetIndex===0) return `${ctx.dataset.label}: ${ctx.parsed.x}% (${d.qAct} gest.)`;
+        if(d.nAnt==null) return `${ctx.dataset.label}: sin dato`;
+        return `${ctx.dataset.label}: ${ctx.parsed.x}% (${d.qAnt} gest.)`;
+      },
+      afterLabel:ctx=>{
+        const d = top10[ctx.dataIndex];
+        if(d.nAnt==null) return '';
+        const delta = +(d.nAct-d.nAnt).toFixed(2);
+        return `Variación: ${delta>=0?'+':''}${delta} pp`;
+      }
+    }}
+  },scales:{
     x:{ticks:{color:'var(--text3)',font:{size:10},callback:v=>v+'%'},grid:{color:'rgba(255,255,255,.06)'},min:75,max:100},
     y:{ticks:{color:'var(--text)',font:{size:9}},grid:{display:false}}
   }}});
@@ -1916,6 +2069,7 @@ function renderView(view){
   if(view==='bitacora')renderBitacora();
   if(view==='facturacion')renderFacYearCharts();
   if(view==='oportunidades')renderOppCharts();
+  if(view==='minto')renderMinto();
   if(view==='ejecutivos'){renderEjecutivos();renderCalidad();}
   if(view==='correlacion')renderCorrelacion();
 }
@@ -1986,3 +2140,5 @@ function toggleCardCollapse(cardId) {
 </script>
 </body>
 </html>
+
+
