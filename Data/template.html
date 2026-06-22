@@ -23,6 +23,7 @@
   .nav-tab:hover{color:var(--text);background:var(--bg3)}
   .nav-tab.active{color:#fff;background:var(--accent)}
   .period-badge{font-family:'DM Mono',monospace;font-size:10px;color:var(--text2);background:var(--bg3);border:1px solid var(--border);padding:3px 10px;border-radius:20px;flex-shrink:0}
+  .update-badge{font-family:'DM Mono',monospace;font-size:10px;color:var(--text2);background:var(--bg3);border:1px solid var(--border);padding:3px 10px;border-radius:20px;flex-shrink:0;opacity:.95}
   .theme-toggle{padding:6px 12px;font-size:11px;font-weight:500;border-radius:8px;cursor:pointer;border:1px solid var(--border);background:var(--bg2);color:var(--text);transition:all .2s;font-family:'Plus Jakarta Sans',sans-serif;flex-shrink:0;display:flex;align-items:center;gap:6px}
   .theme-toggle:hover{border-color:var(--border2);background:var(--bg3)}
   .theme-icon{font-size:14px}
@@ -179,7 +180,8 @@
     <button class="nav-tab" data-view="oportunidades">🚀 Palancas de Mejora</button>
     <button class="nav-tab" data-view="minto">📋 Árbol de Valor</button>
   </div>
-  <div class="period-badge">MAR 2025 – JUN 2026</div>
+  <div class="period-badge" id="periodBadge">Cargando período...</div>
+  <div class="update-badge" id="lastUpdateBadge">Actualizado: --</div>
   <button class="theme-toggle" id="themeToggle">
     <span class="theme-icon">🌙</span>
     <span>Tema</span>
@@ -194,6 +196,15 @@
   <div class="card" style="margin-top:14px">
     <div class="card-title">Comparativo Cargas por Mes <span class="src">CARGAS</span></div>
     <div class="card-subtitle">Registros recibidos: mes actual vs mes anterior, promedio móvil 3 meses y mismo mes año anterior</div>
+    <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px">
+      <span style="font-size:11px;color:var(--text3);font-weight:500">Campaña:</span>
+      <select id="camp-cargas-tipo-sel" class="filter-select" style="width:170px" onchange="_setCampTipo(this.value)">
+        <option value="ALL">Todas las campañas</option>
+        <option value="AVANCE">Avance</option>
+        <option value="REFINANCIAMIENTO">Refinanciamiento</option>
+        <option value="TDC">TDC</option>
+      </select>
+    </div>
     <canvas id="chartCargasComp" style="max-height:300px"></canvas>
   </div>
   <!-- Filtro campaña compartido -->
@@ -246,7 +257,7 @@
   </div>
   <div class="grid-2">
     <div class="card"><div class="card-title">TDC: Titular vs Adicional vs Digital <span class="src">BITACORA</span></div><div class="card-subtitle">Evolución tarjetas de crédito activadas mensuales</div><canvas id="chartBitaTDC"></canvas></div>
-    <div class="card"><div class="card-title">Cruce Seguros Desgravamen vs Avance (%) <span class="src">BITACORA</span></div><div class="card-subtitle">Tendencia decreciente: de 57.4% en Mar-2025 a 29.0% en May-2026 — ⚠ alerta</div><canvas id="chartBitaCruce"></canvas></div>
+    <div class="card"><div class="card-title">Cruce Seguros Desgravamen vs Avance (%) <span class="src">BITACORA</span></div><div class="card-subtitle" id="bitaCruceSubtitle">Tendencia mensual del cruce de seguros desgravamen sobre avance.</div><canvas id="chartBitaCruce"></canvas></div>
   </div>
   <div class="grid-2">
     <div class="card"><div class="card-title">Operaciones Diarias Promedio por Mes <span class="src">BITACORA</span></div><div class="card-subtitle">Productividad diaria promedio (ops totales / días hábiles)</div><canvas id="chartBitaDaily"></canvas></div>
@@ -605,7 +616,42 @@ const VR_MAP={
 const _MN=['ENE','FEB','MAR','ABR','MAY','JUN','JUL','AGO','SEP','OCT','NOV','DIC'];
 function ymOf(p){const s=String(p);return s.length===6?s.slice(0,4)+'-'+s.slice(4,6):s;}
 function mLbl(ym){const a=String(ym).split('-');return _MN[(+a[1])-1]+'-'+a[0].slice(2);}
+function mLblLong(ym){const a=String(ym).split('-');return _MN[(+a[1])-1]+' '+a[0];}
 function fmtCLP(v){return v>=1e9?fmtB(v):fmtMM(v);}
+
+function syncHeaderMeta(){
+  const badge=document.getElementById('periodBadge');
+  if(badge&&Array.isArray(PERIODOS_DH)&&PERIODOS_DH.length){
+    const sorted=[...PERIODOS_DH].sort((a,b)=>+String(a)-+String(b));
+    const pMin=sorted[0],pMax=sorted[sorted.length-1];
+    badge.textContent=`${mLblLong(ymOf(pMin))} – ${mLblLong(ymOf(pMax))}`;
+    const titleYear=String(pMax).slice(0,4);
+    if(titleYear)document.title=`FASTCO × Scotiabank — Dashboard Ejecutivo ${titleYear}`;
+  }
+
+  const updateBadge=document.getElementById('lastUpdateBadge');
+  if(updateBadge){
+    const ts=(typeof DASHBOARD_META!=='undefined'&&DASHBOARD_META&&DASHBOARD_META.generated_at)?DASHBOARD_META.generated_at:null;
+    updateBadge.textContent=ts?`Actualizado: ${ts}`:'Actualizado: N/D';
+  }
+
+  if(Array.isArray(BITA_MONTHLY)&&BITA_MONTHLY.length){
+    const bm=[...BITA_MONTHLY].sort((a,b)=>String(a.m).localeCompare(String(b.m)));
+    const first=bm[0],last=bm[bm.length-1];
+    const pEl=document.getElementById('bita-p');
+    if(pEl){
+      pEl.textContent=`Datos diarios de producción en ventana móvil ${mLblLong(first.m)} a ${mLblLong(last.m)}. Avance Externo, Pago Flexible, Plan Zero, PER y TDC, con montos y cross-sell de seguros.`;
+    }
+    const sub=document.getElementById('bitaCruceSubtitle');
+    if(sub){
+      const firstCruce=Number(first.cruce)||0;
+      const lastCruce=Number(last.cruce)||0;
+      const trend=lastCruce<firstCruce?'decreciente':(lastCruce>firstCruce?'creciente':'estable');
+      const alertTxt=lastCruce<40?' - alerta bajo benchmark 40%':'';
+      sub.textContent=`Tendencia ${trend}: de ${firstCruce.toFixed(1)}% en ${mLblLong(first.m)} a ${lastCruce.toFixed(1)}% en ${mLblLong(last.m)}${alertTxt}.`;
+    }
+  }
+}
 
 let _FNL=null;
 function buildFunnel(){
@@ -755,6 +801,9 @@ function _setCampTipo(val){
   _campTipo=val;
   const sel=document.getElementById('camp-tipo-sel');
   if(sel&&sel.value!==val)sel.value=val;
+  const selCargas=document.getElementById('camp-cargas-tipo-sel');
+  if(selCargas&&selCargas.value!==val)selCargas.value=val;
+  _renderCampCargasComp();
   _renderCampMonthly();
   _renderCampDaily();
 }
@@ -958,6 +1007,38 @@ function _renderCampDaily(){
 }
 // ===== FIN CAMPAÑAS COMPARISON =====
 
+function _renderCampCargasComp(){
+  const cargasSorted=[...CARGAS_RAW].sort((a,b)=>a.p-b.p);
+  const cLabels=cargasSorted.map(c=>PER_LABELS[String(c.p)]||String(c.p));
+  const totalGestByPeriod={};
+  const tipoGestByPeriod={};
+  DH_PIVOT.forEach(d=>{
+    const p=Number(d.p);
+    totalGestByPeriod[p]=(totalGestByPeriod[p]||0)+(+d.g||0);
+    if(!tipoGestByPeriod[p])tipoGestByPeriod[p]={};
+    tipoGestByPeriod[p][d.t]=(tipoGestByPeriod[p][d.t]||0)+(+d.g||0);
+  });
+  const cRegs=cargasSorted.map(c=>{
+    if(_campTipo==='ALL')return c.reg;
+    const totalG=totalGestByPeriod[c.p]||0;
+    const tipoG=(tipoGestByPeriod[c.p]&&tipoGestByPeriod[c.p][_campTipo])||0;
+    return totalG>0?Math.round((c.reg||0)*(tipoG/totalG)):0;
+  });
+  const cPrev=cRegs.map((v,i)=>i>0?cRegs[i-1]:null);
+  const c3mAvg=cRegs.map((v,i)=>i>=2?Math.round((cRegs[i-2]+cRegs[i-1]+v)/3):null);
+  const cLY=cargasSorted.map(c=>{
+    const lyIdx=cargasSorted.findIndex(r=>r.p===c.p-100);
+    return lyIdx>=0?cRegs[lyIdx]:null;
+  });
+  const cActualLabel=_campTipo==='ALL'?'Cargas mes actual':`Cargas mes actual (${_campTipo})`;
+  mkChart('chartCargasComp',{type:'bar',data:{labels:cLabels,datasets:[
+    {label:cActualLabel,data:cRegs,backgroundColor:'rgba(61,124,244,.65)',borderRadius:4,order:4},
+    {label:'Mes anterior',data:cPrev,type:'line',borderColor:'#f5a623',backgroundColor:'transparent',borderWidth:2,borderDash:[5,3],pointRadius:5,pointBackgroundColor:'#f5a623',order:1,spanGaps:false},
+    {label:'Promedio 3 meses',data:c3mAvg,type:'line',borderColor:'#00c4b4',backgroundColor:'transparent',borderWidth:2,pointRadius:5,pointBackgroundColor:'#00c4b4',order:2,spanGaps:false},
+    {label:'Mismo mes año anterior',data:cLY,type:'line',borderColor:'rgba(232,56,42,.85)',backgroundColor:'transparent',borderWidth:2,borderDash:[3,3],pointRadius:5,pointBackgroundColor:'rgba(232,56,42,.85)',order:3,spanGaps:false}
+  ]},options:{plugins:{legend:{position:'top'},tooltip:{callbacks:{label:ctx=>ctx.raw===null?ctx.dataset.label+': N/D':ctx.dataset.label+': '+Number(ctx.raw).toLocaleString('es-CL')}}},scales:{y:{grid:{color:'#1e2540'},ticks:{callback:v=>v>=1e6?(v/1e6).toFixed(1)+'M':v.toLocaleString()}},x:{grid:{display:false}}}}});
+}
+
 function renderCampanas(){
   const f=activeFilters.campanas;
   const pdata = f==='ALL' ? DH_PIVOT : DH_PIVOT.filter(d=>String(d.p)===String(f));
@@ -974,26 +1055,13 @@ function renderCampanas(){
     const ticketCell = isTDC(d.tipo) ? '1 venta' : (d.ticket>0?'$'+(d.ticket/1e6).toFixed(1)+'M':'—');
     tbody.innerHTML+=`<tr><td><span class="tipo-badge"><span class="tipo-dot" style="background:${TIPO_COLORS[d.tipo]}"></span>${d.tipo}</span></td><td>${fmt(d.g)}</td><td>${fmt(d.e)}</td><td><span class="semaforo ${sem}"></span>${d.tasa}%</td><td>${fmt(d.c)}</td><td>${d.conv}%</td><td>${montoCell}</td><td>${ticketCell}</td><td><span class="semaforo ${sem}"></span></td></tr>`;
   });
-
-
-  // Cargas comparison chart (always full series, independent of period filter)
-  const cargasSorted=[...CARGAS_RAW].sort((a,b)=>a.p-b.p);
-  const cLabels=cargasSorted.map(c=>PER_LABELS[String(c.p)]||String(c.p));
-  const cRegs=cargasSorted.map(c=>c.reg);
-  const cPrev=cargasSorted.map((c,i)=>i>0?cargasSorted[i-1].reg:null);
-  const c3mAvg=cargasSorted.map((c,i)=>i>=2?Math.round((cargasSorted[i-2].reg+cargasSorted[i-1].reg+c.reg)/3):null);
-  const cLY=cargasSorted.map(c=>{const ly=CARGAS_RAW.find(r=>r.p===c.p-100);return ly?ly.reg:null;});
-  mkChart('chartCargasComp',{type:'bar',data:{labels:cLabels,datasets:[
-    {label:'Cargas mes actual',data:cRegs,backgroundColor:'rgba(61,124,244,.65)',borderRadius:4,order:4},
-    {label:'Mes anterior',data:cPrev,type:'line',borderColor:'#f5a623',backgroundColor:'transparent',borderWidth:2,borderDash:[5,3],pointRadius:5,pointBackgroundColor:'#f5a623',order:1,spanGaps:false},
-    {label:'Promedio 3 meses',data:c3mAvg,type:'line',borderColor:'#00c4b4',backgroundColor:'transparent',borderWidth:2,pointRadius:5,pointBackgroundColor:'#00c4b4',order:2,spanGaps:false},
-    {label:'Mismo mes año anterior',data:cLY,type:'line',borderColor:'rgba(232,56,42,.85)',backgroundColor:'transparent',borderWidth:2,borderDash:[3,3],pointRadius:5,pointBackgroundColor:'rgba(232,56,42,.85)',order:3,spanGaps:false}
-  ]},options:{plugins:{legend:{position:'top'},tooltip:{callbacks:{label:ctx=>ctx.raw===null?ctx.dataset.label+': N/D':ctx.dataset.label+': '+Number(ctx.raw).toLocaleString('es-CL')}}},scales:{y:{grid:{color:'#1e2540'},ticks:{callback:v=>v>=1e6?(v/1e6).toFixed(1)+'M':v.toLocaleString()}},x:{grid:{display:false}}}}});
+  _renderCampCargasComp();
 
   // Init comparison charts
   _buildCampPills('camp-pills-m',_campSelM,'m');
   _buildCampPills('camp-pills-d',_campSelD,'d');
   const tipoSel=document.getElementById('camp-tipo-sel');if(tipoSel)tipoSel.value=_campTipo;
+  const tipoSelCargas=document.getElementById('camp-cargas-tipo-sel');if(tipoSelCargas)tipoSelCargas.value=_campTipo;
   const daySel=document.getElementById('camp-day-sel');
   if(daySel&&!daySel.options.length){
     const _ad=Object.keys(_campDayAgg()).sort();
@@ -2093,6 +2161,7 @@ window.addEventListener('DOMContentLoaded',()=>{
   // Build filters
   const perOpts = PERIODOS_DH;
   const perLabelsArr = perOpts.map(p=>PER_LABELS[p]||p);
+  syncHeaderMeta();
   buildFilter('filter-campanas','campanas',perOpts,perLabelsArr);
   buildFilter('filter-ejecutivos','ejecutivos',perOpts,perLabelsArr);
   buildFilter('filter-oportunidades','oportunidades',perOpts,perLabelsArr);

@@ -106,6 +106,8 @@ El dashboard expone 7 pestañas (etiqueta visible -> vista interna):
 Notas funcionales recientes:
 - Filtro de periodo: en todas las pestañas (incluida Calidad dentro de Ejecutivos) los meses se ordenan de forma descendente, con el mes mas actual arriba y el mas antiguo abajo.
 - Filtro de campaña (Palancas de Mejora y Arbol de Valor): las opciones se muestran como "Todas las campañas / Avance / Refinanciamiento / TDC", sin el sufijo "(monto)/(unidades)".
+- Campanas: en "Comparativo Cargas por Mes" existe filtro desplegable por campana (Todas/Avance/Refinanciamiento/TDC) y el grafico se recalcula al cambiar seleccion.
+- Campanas: el filtro de campana del bloque de Cargas esta sincronizado con el filtro de campana compartido de los comparativos de Gestion.
 - Terminologia: el factor del embudo antes llamado "Materializacion" se muestra como "Venta real / Compromisos".
 - Encabezados de Palancas de Mejora y Arbol de Valor reescritos con una descripcion de proposito (que hace cada pestaña y como leerla).
 - Campanas: en los comparativos "Gestion por Mes" y "Gestion por Dia" la seleccion de KPI es single-select.
