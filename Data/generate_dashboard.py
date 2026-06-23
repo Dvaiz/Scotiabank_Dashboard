@@ -19,7 +19,7 @@ import os
 import re
 import sys
 from pathlib import Path
-from datetime import date, timedelta
+from datetime import date, timedelta, datetime
 
 try:
     import pandas as pd
@@ -1131,8 +1131,14 @@ def load_facturacion_proyeccion():
 # 8. Generate JavaScript data block
 # ============================================================
 def generate_js_data(dh_pivot, periodos, per_labels, cargas, bita, ej_monthly, top10, ot_map, corr_data, bita_daily=None, ej_hc=None, ej_tiempos=None, fact_proy=None, bita_fact_uf=None, dh_daily=None, cal_ciclo=None, cal_prod=None, cal_usr=None, cal_productos=None, cal_ciclos=None):
+    generated_at = datetime.now()
+    generated_meta = {
+        'generated_at_iso': generated_at.isoformat(timespec='seconds'),
+        'generated_at': generated_at.strftime('%Y-%m-%d %H:%M:%S'),
+    }
     lines = []
     lines.append("// ===================== DATA (auto-generated) =====================")
+    lines.append(f"const DASHBOARD_META = {json.dumps(generated_meta)};")
     lines.append(f"const PERIODOS_DH = {json.dumps(periodos)};")
     lines.append(f"const PER_LABELS = {json.dumps(per_labels)};")
     lines.append("const TIPO_COLORS = {REFINANCIAMIENTO:'#3d7cf4',AVANCE:'#00c4b4',TDC:'#e8382a',CONSUMO:'#f5a623'};")
