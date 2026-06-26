@@ -70,10 +70,10 @@ SQL_DRIVER_CANDIDATES = [
 
 OT_MAP_EMBEDDED = [
         {'prod': 'PLAN ZERO PER', 'ot': 1320030},
-        {'prod': 'TC ADICIONAL', 'ot': 1220056},
-        {'prod': 'TC TITULAR', 'ot': 1220055},
-        {'prod': 'PAGO FLEXIBLE', 'ot': 1220007},
-        {'prod': 'AVANCE EXTERNO', 'ot': 1220005},
+    {'prod': 'TDC ADICIONAL', 'ot': 1220056},
+    {'prod': 'TDC TITULAR', 'ot': 1220055},
+    {'prod': 'REFINANCIAMIENTO', 'ot': 1220007},
+    {'prod': 'AVANCE', 'ot': 1220005},
 ]
 
 QUERY_BITACORA = """
@@ -91,10 +91,16 @@ SELECT
         CAST(NOTA AS DECIMAL(10, 2)) AS NOTA,
         ID_PRODUCTO,
         PRODUCTO,
-        RUT_DEUDOR
+    RUT_DEUDOR,
+    CASE
+        WHEN ID_PRODUCTO IN (785,784,740,499) THEN 'TDC TITULAR'
+        WHEN ID_PRODUCTO = 444 THEN 'TDC ADICIONAL'
+        WHEN ID_PRODUCTO IN (569,761,762,589,760,588) THEN 'REFINANCIAMIENTO'
+        WHEN ID_PRODUCTO IN (585,325,333) THEN 'AVANCE'
+    END AS TIPO
 FROM PCVMEZA.QFASTCO_INFORMES.dbo.TBL_CIERRE_CALIDAD WITH (NOLOCK)
 WHERE MES >= CONVERT(VARCHAR(6), DATEADD(month, -12, GETDATE()), 112)
-    AND ID_PRODUCTO IN (325, 569, 444, 761, 740, 762, 760, 585, 784, 333)
+    AND ID_PRODUCTO IN (325, 569, 444, 761, 740, 762, 760, 585, 784, 333, 785, 499, 589, 588)
 """
 
 QUERY_CARGAS = """
@@ -127,7 +133,8 @@ SELECT
         A.Disponible,
         A.TMO,
         CASE
-                WHEN A.ID_PRODUCTO IN (785,784,740,444,499) THEN 'TDC'
+                WHEN A.ID_PRODUCTO IN (785,784,740,499) THEN 'TDC TITULAR'
+                WHEN A.ID_PRODUCTO = 444 THEN 'TDC ADICIONAL'
                 WHEN A.ID_PRODUCTO IN (569,761,762,589,760,588) THEN 'REFINANCIAMIENTO'
                 WHEN A.ID_PRODUCTO IN (585,325,333) THEN 'AVANCE'
         END AS TIPO
@@ -138,14 +145,14 @@ INNER JOIN NOMINA.DBO.OT C
         ON A.ID_PRODUCTO = C.ID_PRODUCTO
 WHERE A.PERIODO >= CONVERT(VARCHAR(6), DATEADD(month, -12, GETDATE()), 112)
     AND C.OT IN (1220022,1220005,1220006,1220007,1220056,1320025,1220055,1320030)
-    AND A.ID_PRODUCTO NOT IN (763,879,872,685,786,321,288,257)
+            AND A.ID_PRODUCTO NOT IN (763,879,872,685,321,288,257)
 """
 
 QUERY_DETALLE_EJECUTIVO = """
 SELECT *
 FROM [COMISIONES].[dbo].[TBL_VENTAS_PERIODO] WITH (NOLOCK)
 WHERE PERIODO >= CONVERT(VARCHAR(6), DATEADD(month, -12, GETDATE()), 112)
-    AND TIPO IN ('refinanciamiento', 'avance', 'TDC')
+    AND TIPO IN ('refinanciamiento', 'avance', 'TDC', 'TDC TITULAR', 'TDC ADICIONAL', 'TC TITULAR', 'TC ADICIONAL')
 """
 
 QUERY_FACTURACION = """
@@ -155,13 +162,17 @@ FROM [ALERTAS].[dbo].[MAPA] WITH (NOLOCK)
 
 # Fixed tariff model embedded to avoid runtime dependency on MODELO_FACTURACION.xlsx.
 FACT_PROY_TARIFFS = {
+    'AVANCE': 15438.801055999998,
     'AVANCE EXTERNO': 15438.801055999998,
     'SEG. DESGRAVAMEN': 12973.782399999996,
+    'REFINANCIAMIENTO': 15197.569789499998,
     'PAGO FLEXIBLE': 15197.569789499998,
     'PLAN ZERO OPERA': 24123.12665,
     'PLAN ZERO PER': 38597.00264,
     'PER': 12244.00714,
+    'TDC TITULAR': 28947.751979999997,
     'TC TITULAR': 28947.751979999997,
+    'TDC ADICIONAL': 33772.377309999996,
     'TC ADICIONAL': 33772.377309999996,
     'TC DIGITAL': 33772.377309999996,
     'TC TSYS': 0.0,
@@ -223,6 +234,56 @@ def _find_column(df, *patterns):
     return None
 
 
+TIPO_NORMALIZATION = {
+    'AVANCE': 'AVANCE',
+    'AVANCE EXTERNO': 'AVANCE',
+    'REFINANCIAMIENTO': 'REFINANCIAMIENTO',
+    'PAGO FLEXIBLE': 'REFINANCIAMIENTO',
+    'TDC': 'TDC',
+    'TDC TITULAR': 'TDC TITULAR',
+    'TC TITULAR': 'TDC TITULAR',
+    'TDC ADICIONAL': 'TDC ADICIONAL',
+    'TC ADICIONAL': 'TDC ADICIONAL',
+    'PLAN ZERO': 'PLAN ZERO OPERA',
+    'PLAN ZERO OPERA': 'PLAN ZERO OPERA',
+    'PLAN ZERO PER': 'PLAN ZERO PER',
+    'PER': 'PER',
+    'SEG. DESGRAVAMEN': 'SEG. DESGRAVAMEN',
+    'SEGUROS DESGRAVAMEN AVANCE': 'SEG. DESGRAVAMEN',
+    'CONSUMO': 'CONSUMO',
+}
+
+
+def _normalize_tipo(value):
+    raw = str(value).replace('\xa0', ' ').strip().upper()
+    raw = re.sub(r'\s+', ' ', raw)
+    return TIPO_NORMALIZATION.get(raw, raw)
+
+
+def _find_bitacora_column(df, includes, excludes=None):
+    excludes = excludes or []
+    for col in df.columns:
+        upper_col = str(col).replace('\xa0', ' ').strip().upper()
+        if all(token.upper() in upper_col for token in includes) and all(token.upper() not in upper_col for token in excludes):
+            return col
+    return None
+
+
+def _get_bitacora_columns(df):
+    return {
+        'av_o': _find_bitacora_column(df, ['NRO'], ['SEGUROS']) or _find_bitacora_column(df, ['AVANCE EXTERNO', 'NRO']),
+        'av_m': _find_bitacora_column(df, ['AVANCE', 'MONTO'], ['SEGUROS']) or _find_bitacora_column(df, ['AVANCE EXTERNO', 'MONTO']),
+        'seg_o': _find_bitacora_column(df, ['SEGUROS', 'NRO']) or _find_bitacora_column(df, ['DESGRAVAMEN', 'NRO']),
+        'pf_o': _find_bitacora_column(df, ['PAGO FLEXIBLE', 'NRO']) or _find_bitacora_column(df, ['REFINANCIAMIENTO', 'NRO']),
+        'pf_m': _find_bitacora_column(df, ['PAGO FLEXIBLE', 'MONTO']) or _find_bitacora_column(df, ['REFINANCIAMIENTO', 'MONTO']),
+        'pz_o': _find_bitacora_column(df, ['PLAN ZERO', 'NRO']),
+        'per': _find_bitacora_column(df, ['PER', 'NRO']),
+        'tc_t': _find_bitacora_column(df, ['TDC', 'TITULAR']) or _find_bitacora_column(df, ['TC', 'TITULAR']),
+        'tc_a': _find_bitacora_column(df, ['TDC', 'ADICIONAL']) or _find_bitacora_column(df, ['TC', 'ADICIONAL']),
+        'tc_d': _find_bitacora_column(df, ['TDC', 'DIGITAL']) or _find_bitacora_column(df, ['TC', 'DIGITAL']),
+    }
+
+
 def _rolling_12m_cutoff_ym():
     """Return inclusive YYYY-MM cutoff for rolling 12 months."""
     return (pd.Timestamp.today().replace(day=1) - pd.DateOffset(months=12)).strftime('%Y-%m')
@@ -247,15 +308,15 @@ def safe_float(val):
 # ============================================================
 def load_ot_map():
     colors = {
-        'AVANCE EXTERNO': '#00c4b4',
-        'PAGO FLEXIBLE': '#f5a623',
-        'TC TITULAR': '#3d7cf4',
-        'TC ADICIONAL': '#e8382a',
+        'AVANCE': '#00c4b4',
+        'REFINANCIAMIENTO': '#f5a623',
+        'TDC TITULAR': '#3d7cf4',
+        'TDC ADICIONAL': '#e8382a',
         'PLAN ZERO PER': '#27c47a',
     }
     result = []
     for row in OT_MAP_EMBEDDED:
-        prod = row['prod'].strip()
+        prod = _normalize_tipo(row['prod'])
         ot = int(row['ot'])
         result.append({'prod': prod, 'ot': ot, 'color': colors.get(prod, '#8892b0')})
     return result
@@ -281,7 +342,7 @@ def load_data_historia():
     df['COMPROMISOS_GENERADOS_Q'] = pd.to_numeric(df['COMPROMISOS_GENERADOS_Q'], errors='coerce').fillna(0).astype(int)
     df['COMPROMISO_GENERADOS_MONTO'] = pd.to_numeric(df['COMPROMISO_GENERADOS_MONTO'], errors='coerce').fillna(0).astype(int)
     df['TIPO'] = df['TIPO'].astype(str).str.strip().str.upper()
-    df = df[~df['TIPO'].isin(['NAN', 'NAT', ''])]
+    df = df[~df['TIPO'].isin(['NAN', 'NAT', 'NONE', ''])]
 
     # DH_PIVOT: group by PERIODO + TIPO
     grouped = df.groupby(['PERIODO', 'TIPO']).agg({
@@ -385,17 +446,17 @@ def load_bitacora():
     df = df[df['FECHA'] >= cutoff_date]
     df['MES'] = df['FECHA'].dt.to_period('M')
 
-    # Map columns by pattern matching
-    col_av_o = next((c for c in df.columns if 'AVANCE EXTERNO' in c and 'Nro' in c), None)
-    col_av_m = next((c for c in df.columns if 'AVANCE EXTERNO' in c and 'Monto' in c), None)
-    col_seg_o = next((c for c in df.columns if 'SEGUROS' in c and 'Nro' in c), None)
-    col_pf_o = next((c for c in df.columns if 'PAGO FLEXIBLE' in c and 'Nro' in c), None)
-    col_pf_m = next((c for c in df.columns if 'PAGO FLEXIBLE' in c and 'Monto' in c), None)
-    col_pz_o = next((c for c in df.columns if 'PLAN ZERO' in c and 'Nro' in c), None)
-    col_per = next((c for c in df.columns if c.startswith('PER') and 'Nro' in c), None)
-    col_tc_t = next((c for c in df.columns if 'TC' in c and 'TITULAR' in c), None)
-    col_tc_a = next((c for c in df.columns if 'TC' in c and 'ADICIONAL' in c), None)
-    col_tc_d = next((c for c in df.columns if 'TC' in c and 'DIGITAL' in c), None)
+    cols = _get_bitacora_columns(df)
+    col_av_o = cols['av_o']
+    col_av_m = cols['av_m']
+    col_seg_o = cols['seg_o']
+    col_pf_o = cols['pf_o']
+    col_pf_m = cols['pf_m']
+    col_pz_o = cols['pz_o']
+    col_per = cols['per']
+    col_tc_t = cols['tc_t']
+    col_tc_a = cols['tc_a']
+    col_tc_d = cols['tc_d']
 
     # Fill NaN for numeric columns
     num_cols = [col_av_o, col_av_m, col_seg_o, col_pf_o, col_pf_m, col_pz_o, col_per, col_tc_t, col_tc_a, col_tc_d]
@@ -441,16 +502,17 @@ def load_bitacora_daily():
     cutoff_date = pd.Timestamp.today().replace(day=1) - pd.DateOffset(months=12)
     df = df[df['FECHA'] >= cutoff_date]
 
-    col_av_o = next((c for c in df.columns if 'AVANCE EXTERNO' in c and 'Nro' in c), None)
-    col_av_m = next((c for c in df.columns if 'AVANCE EXTERNO' in c and 'Monto' in c), None)
-    col_pf_o = next((c for c in df.columns if 'PAGO FLEXIBLE' in c and 'Nro' in c), None)
-    col_pf_m = next((c for c in df.columns if 'PAGO FLEXIBLE' in c and 'Monto' in c), None)
-    col_pz_o = next((c for c in df.columns if 'PLAN ZERO' in c and 'Nro' in c), None)
-    col_per = next((c for c in df.columns if c.startswith('PER') and 'Nro' in c), None)
-    col_tc_t = next((c for c in df.columns if 'TC' in c and 'TITULAR' in c), None)
-    col_tc_a = next((c for c in df.columns if 'TC' in c and 'ADICIONAL' in c), None)
-    col_tc_d = next((c for c in df.columns if 'TC' in c and 'DIGITAL' in c), None)
-    col_seg_o = next((c for c in df.columns if 'SEGUROS' in c and 'Nro' in c), None)
+    cols = _get_bitacora_columns(df)
+    col_av_o = cols['av_o']
+    col_av_m = cols['av_m']
+    col_pf_o = cols['pf_o']
+    col_pf_m = cols['pf_m']
+    col_pz_o = cols['pz_o']
+    col_per = cols['per']
+    col_tc_t = cols['tc_t']
+    col_tc_a = cols['tc_a']
+    col_tc_d = cols['tc_d']
+    col_seg_o = cols['seg_o']
 
     num_cols = [col_av_o, col_av_m, col_pf_o, col_pf_m, col_pz_o, col_per, col_tc_t, col_tc_a, col_tc_d, col_seg_o]
     for c in num_cols:
@@ -497,7 +559,7 @@ def load_ejecutivos():
     df['PERIODO'] = df['PERIODO'].astype(int).astype(str)
     df['MONTO'] = pd.to_numeric(df['MONTO'], errors='coerce').fillna(0).astype(int)
     df['Q'] = pd.to_numeric(df['Q'], errors='coerce').fillna(0).astype(int)
-    df['TIPO'] = df['TIPO'].astype(str).str.strip().str.upper()
+    df['TIPO'] = df['TIPO'].apply(_normalize_tipo)
     df = df[~df['TIPO'].isin(['NAN', 'NAT', ''])]
 
     # Group by user + period + tipo → compromisos (Q) and monto
@@ -677,6 +739,8 @@ def enrich_ejecutivos(ej_monthly, top10, dh_df):
     for entry in ej_monthly:
         up_key = (entry['name'], entry['p'])
         if up_key not in processed_ups:
+            if entry.get('t') == 'TDC':
+                continue
             ej_monthly_new.append(entry)
 
     ej_monthly = ej_monthly_new
@@ -810,16 +874,16 @@ def enrich_corr_data(corr_data, dh_df, bita_monthly):
         for entry in corr_data:
             bm = bita_map.get(entry['m'])
             if bm:
-                if entry['pr'] == 'AVANCE EXTERNO':
+                if entry['pr'] == 'AVANCE':
                     entry['oc'] = bm['av_o']
                     entry['mc'] = bm['av_m']
-                elif entry['pr'] == 'PAGO FLEXIBLE':
+                elif entry['pr'] == 'REFINANCIAMIENTO':
                     entry['oc'] = bm['pf_o']
                     entry['mc'] = bm['pf_m']
-                elif entry['pr'] == 'TC TITULAR':
+                elif entry['pr'] == 'TDC TITULAR':
                     entry['oc'] = bm['tc_t']
                     entry['mc'] = bm['tc_t']
-                elif entry['pr'] == 'TC ADICIONAL':
+                elif entry['pr'] == 'TDC ADICIONAL':
                     entry['oc'] = bm['tc_a']
                     entry['mc'] = bm['tc_a']
                 elif entry['pr'] == 'PLAN ZERO PER':
@@ -919,10 +983,11 @@ def load_bita_facturacion_uf(uf_value):
     df = df.dropna(subset=['FECHA']).sort_values('FECHA').reset_index(drop=True)
     df['mes'] = df['FECHA'].dt.to_period('M')
 
-    col_pf_o = next((c for c in df.columns if 'PAGO FLEXIBLE' in c and 'Nro' in c), None)
-    col_pf_m = next((c for c in df.columns if 'PAGO FLEXIBLE' in c and 'Monto' in c), None)
-    col_av_o = next((c for c in df.columns if 'AVANCE EXTERNO' in c and 'Nro' in c), None)
-    col_av_m = next((c for c in df.columns if 'AVANCE EXTERNO' in c and 'Monto' in c), None)
+    cols = _get_bitacora_columns(df)
+    col_pf_o = cols['pf_o']
+    col_pf_m = cols['pf_m']
+    col_av_o = cols['av_o']
+    col_av_m = cols['av_m']
 
     if not all([col_pf_o, col_pf_m, col_av_o, col_av_m]):
         print("  [FACT-UF] No se encontraron columnas PF/AV en BITACORA.xlsx")
@@ -1079,26 +1144,21 @@ def load_facturacion_proyeccion():
     bdf = bdf.dropna(subset=['FECHA'])
     bdf['YYYY_MM'] = bdf['FECHA'].dt.strftime('%Y-%m')
 
-    # Map Bitacora columns to product names
+    cols = _get_bitacora_columns(bdf)
     col_map = {
-        'AVANCE EXTERNO Nro. Op.': 'AVANCE EXTERNO',
-        'SEGUROS DESGRAVAMEN AVANCE Nro. Op.': 'SEG. DESGRAVAMEN',
-        'PAGO FLEXIBLE Nro. Op.': 'PAGO FLEXIBLE',
-        'PLAN ZERO Nro. Op.': 'PLAN ZERO OPERA',
-        'PLAN ZERO PER': 'PLAN ZERO PER',
-        'PER Nro. Op.': 'PER',
+        cols['av_o']: 'AVANCE',
+        cols['seg_o']: 'SEG. DESGRAVAMEN',
+        cols['pf_o']: 'REFINANCIAMIENTO',
+        cols['pz_o']: 'PLAN ZERO OPERA',
+        cols['per']: 'PLAN ZERO PER',
+        cols['tc_t']: 'TDC TITULAR',
+        cols['tc_a']: 'TDC ADICIONAL',
+        cols['tc_d']: 'TC DIGITAL',
     }
-    # TC columns (may have \xa0)
-    for c in bdf.columns:
-        cn = c.strip().replace('\xa0', ' ').replace('  ', ' ')
-        if 'TC' in cn and 'TITULAR' in cn:
-            col_map[c] = 'TC TITULAR'
-        elif 'TC' in cn and 'ADICIONAL' in cn:
-            col_map[c] = 'TC ADICIONAL'
-        elif 'TC' in cn and 'DIGITAL' in cn:
-            col_map[c] = 'TC DIGITAL'
-        elif 'TC' in cn and 'TSYS' in cn:
-            col_map[c] = 'TC TSYS'
+    col_map = {col: prod for col, prod in col_map.items() if col}
+    extra_tsys = _find_bitacora_column(bdf, ['TC', 'TSYS'])
+    if extra_tsys:
+        col_map[extra_tsys] = 'TC TSYS'
 
     # Aggregate by month
     months = sorted(bdf['YYYY_MM'].unique())
@@ -1141,7 +1201,7 @@ def generate_js_data(dh_pivot, periodos, per_labels, cargas, bita, ej_monthly, t
     lines.append(f"const DASHBOARD_META = {json.dumps(generated_meta)};")
     lines.append(f"const PERIODOS_DH = {json.dumps(periodos)};")
     lines.append(f"const PER_LABELS = {json.dumps(per_labels)};")
-    lines.append("const TIPO_COLORS = {REFINANCIAMIENTO:'#3d7cf4',AVANCE:'#00c4b4',TDC:'#e8382a',CONSUMO:'#f5a623'};")
+    lines.append("const TIPO_COLORS = {REFINANCIAMIENTO:'#3d7cf4',AVANCE:'#00c4b4','TDC TITULAR':'#e8382a','TDC ADICIONAL':'#ff8b7b',TDC:'#e8382a',CONSUMO:'#f5a623'};")
     lines.append(f"\nconst DH_PIVOT = {json.dumps(dh_pivot)};")
     if dh_daily:
         lines.append(f"\nconst DH_DAILY = {json.dumps(dh_daily)};")
@@ -1152,7 +1212,7 @@ def generate_js_data(dh_pivot, periodos, per_labels, cargas, bita, ej_monthly, t
         lines.append(f"\nconst BITA_DAILY = {json.dumps(bita_daily)};")
     lines.append(f"\nconst TOP10 = {json.dumps(top10)};")
     lines.append(f"\nconst EJ_MONTHLY = {json.dumps(ej_monthly)};")
-    ej_tipos = sorted(set(e['t'] for e in ej_monthly if e.get('t') and e['t'] != 'CONSUMO'))
+    ej_tipos = sorted(set(e['t'] for e in ej_monthly if e.get('t') and e['t'] not in {'CONSUMO', 'TDC'}))
     lines.append(f"const EJ_TIPOS = {json.dumps(ej_tipos)};")
     if ej_hc:
         lines.append(f"\nconst EJ_HC = {json.dumps(ej_hc)};")
@@ -1162,7 +1222,8 @@ def generate_js_data(dh_pivot, periodos, per_labels, cargas, bita, ej_monthly, t
     if corr_data:
         lines.append(f"\nconst CORR_DATA = {json.dumps(corr_data)};")
         lines.append("const CORR_MONTHS = [...new Set(CORR_DATA.map(d=>d.m))].sort();")
-        lines.append("const CORR_PRODS = OT_PROD_MAP.map(p=>p.prod);")
+        lines.append("const CORR_PROD_LABELS = {'TDC ADICIONAL':'TDC ADICIONAL','TDC TITULAR':'TDC TITULAR','REFINANCIAMIENTO':'REFINANCIAMIENTO','AVANCE':'AVANCE','TC ADICIONAL':'TDC ADICIONAL','TC TITULAR':'TDC TITULAR','PAGO FLEXIBLE':'REFINANCIAMIENTO','AVANCE EXTERNO':'AVANCE'};")
+        lines.append("const CORR_PRODS = OT_PROD_MAP.map(p=>p.prod).filter(p=>p!=='PLAN ZERO PER');")
         lines.append("let activeCorrProd = 'ALL';")
     if fact_proy:
         lines.append(f"\nconst FACT_PROY = {json.dumps(fact_proy)};")
@@ -1191,41 +1252,40 @@ def load_calidad():
     df['FECHA_GESTION'] = pd.to_datetime(df['FECHA_GESTION'], errors='coerce')
     df = df[df['FECHA_GESTION'].notna()].copy()
     df['p'] = df['FECHA_GESTION'].dt.strftime('%Y%m')
+    df['TIPO'] = df['TIPO'].astype(str).str.strip().str.upper()
+    df = df[~df['TIPO'].isin(['NAN', 'NAT', 'NONE', ''])]
 
-    # Simplify product name: strip SCOTIABANK_ prefix for display
-    df['prod_short'] = df['PRODUCTO'].str.replace(r'^SCOTIABANK_', '', regex=True)
-
-    # 1. Per-period per-ciclo per-product aggregate (allows product filter in ciclo chart)
+    # 1. Per-period per-ciclo per-campaign aggregate
     cal_ciclo = (
-        df.groupby(['p', 'CICLO', 'prod_short'])['NOTA']
+        df.groupby(['p', 'CICLO', 'TIPO'])['NOTA']
         .agg(n='mean', q='count')
         .reset_index()
-        .rename(columns={'CICLO': 'c', 'prod_short': 'prod'})
+        .rename(columns={'CICLO': 'c', 'TIPO': 'prod'})
     )
     cal_ciclo['n'] = cal_ciclo['n'].round(4)
     cal_ciclo_list = cal_ciclo.to_dict('records')
 
-    # 2. Per-period per-product aggregate
+    # 2. Per-period per-campaign aggregate
     cal_prod = (
-        df.groupby(['p', 'prod_short'])['NOTA']
+        df.groupby(['p', 'TIPO'])['NOTA']
         .agg(n='mean', q='count')
         .reset_index()
-        .rename(columns={'prod_short': 'prod'})
+        .rename(columns={'TIPO': 'prod'})
     )
     cal_prod['n'] = cal_prod['n'].round(4)
     cal_prod_list = cal_prod.to_dict('records')
 
-    # 3. Per-user per-period per-product aggregate (for ranking with campaign filter)
+    # 3. Per-user per-period per-campaign aggregate (for ranking with campaign filter)
     cal_usr = (
-        df.groupby(['USUARIO_AGENTE', 'p', 'prod_short'])['NOTA']
+        df.groupby(['USUARIO_AGENTE', 'p', 'TIPO'])['NOTA']
         .agg(n='mean', q='count')
         .reset_index()
-        .rename(columns={'USUARIO_AGENTE': 'u', 'prod_short': 'prod'})
+        .rename(columns={'USUARIO_AGENTE': 'u', 'TIPO': 'prod'})
     )
     cal_usr['n'] = cal_usr['n'].round(4)
     cal_usr_list = cal_usr.to_dict('records')
 
-    productos = sorted(df['prod_short'].unique().tolist())
+    productos = sorted(df['TIPO'].unique().tolist())
     ciclos = sorted(df['CICLO'].unique().tolist())
     return cal_ciclo_list, cal_prod_list, cal_usr_list, productos, ciclos
 
